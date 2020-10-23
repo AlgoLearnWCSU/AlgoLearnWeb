@@ -1,4 +1,4 @@
-<ul ngbNav [activeId]="route.url | async" class="nav-pills justify-content-center">
+<ul ngbNav [activeId]="location.path()" class="nav-pills justify-content-center">
 	<li [ngbNavItem]="link.path" *ngFor="let link of links">
 		<a ngbNavLink routerLink="./{{link.path}}">{{ link.title }}</a>
 	</li>

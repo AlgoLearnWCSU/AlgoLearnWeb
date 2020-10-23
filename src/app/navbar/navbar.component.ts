@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
 	selector: 'app-navbar',
@@ -10,12 +10,12 @@ export class NavbarComponent implements OnInit {
 
 	links = [
 		{ title: 'Home', path: '/home' },
-		{ title: 'Page 2', path: '/page1' },
-		{ title: 'Page 3', path: '/page2' },
-		{ title: 'Page 4', path: '/page3' },
+		{ title: 'Page 2', path: '/page2' },
+		{ title: 'Page 3', path: '/page3' },
+		{ title: 'Page 4', path: '/page4' },
 	];
 
-	constructor(public route: ActivatedRoute) {
+	constructor(public location: Location) {
 	}
 
 	ngOnInit(): void {

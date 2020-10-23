@@ -9,7 +9,10 @@
 	margin-right: 0 !important;
 }
 
-html,
+html {
+	height: 100%;
+}
+
 body {
 	background-color: #1b1f31;
 	color: white;

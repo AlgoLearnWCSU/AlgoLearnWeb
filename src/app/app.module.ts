@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,6 +32,7 @@ import { UserHubComponent } from './user-hub/user-hub.component';
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
+		HttpClientModule,
 		NgbModule,
 		FormsModule,
 		BrowserAnimationsModule,

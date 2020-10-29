@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Problem, ProblemService } from 'src/app/services/problem.service';
 
 @Component({
 	selector: 'app-problem-list',
@@ -9,54 +10,20 @@ import { Router } from '@angular/router';
 export class ProblemListComponent implements OnInit {
 
 	displayedColumns: string[] = ['id', 'name', 'poster', 'description'];
-	problems: {
-		id: number,
-		name: string,
-		poster: string,
-		description: string,
-		categories: string[]
-	}[] = [
-			{
-				id: 0,
-				name: 'Sort array',
-				poster: 'jack',
-				description: 'Sort a list of integers.',
-				categories: ['Array', 'Sort']
-			},
-			{
-				id: 1,
-				name: 'Search array',
-				poster: 'ty',
-				description: 'Find an element from an unsorted array of integers and return index or -1 if unfound.',
-				categories: ['Array', 'Search']
-			},
-			{
-				id: 2,
-				name: 'Search sorted array',
-				poster: 'john',
-				description: 'Find an element from a sorted array of integers and return index or -1 if unfound.',
-				categories: ['Array', 'Search']
-			}
-		]
+	problems: Problem[];
 
 	constructor(
-		private router: Router
+		private router: Router,
+		public problemService: ProblemService
 	) { }
 
 	ngOnInit(): void {
+		this.problemService.getProblems().subscribe(
+			data => this.problems = data,
+			err => console.error(err));
 	}
 
-	nav(problem: {
-		id: number,
-		name: string,
-		poster: string,
-		description: string
-	}) {
+	nav(problem: Problem) {
 		this.router.navigate(['problem', 'solve', problem.id])
 	}
-
-	test() {
-		console.log("HOVERED");
-	}
-
 }

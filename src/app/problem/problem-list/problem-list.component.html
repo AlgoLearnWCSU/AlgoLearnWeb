@@ -1,14 +1,9 @@
-<table>
-	<tr>
-		<th>id</th>
-		<th>name</th>
-		<th>poster</th>
-		<th>description</th>
-	</tr>
-	<tr *ngFor="let problem of problems">
-		<td (click)=nav(problem)>{{problem.id}}</td>
-		<td (click)=nav(problem)>{{problem.name}}</td>
-		<td (click)=nav(problem)>{{problem.poster}}</td>
-		<td (click)=nav(problem)>{{problem.description}}</td>
-	</tr>
-</table>
+<mat-list>
+	<mat-list-item *ngFor="let problem of problems" class="d-block" (click)="nav(problem)" style="width: fit-content">
+		{{problem.name}}: {{problem.description | slice:0:40}}
+		<span *ngIf="problem.description.length > 40">...</span>
+		<mat-chip-list class="pl-2">
+			<mat-chip *ngFor="let category of problem.categories">{{ category }}</mat-chip>
+		</mat-chip-list>
+	</mat-list-item>
+</mat-list>

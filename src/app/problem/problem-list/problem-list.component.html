@@ -1,1 +1,14 @@
-<p>problem-list works!</p>
+<table>
+	<tr>
+		<th>id</th>
+		<th>name</th>
+		<th>poster</th>
+		<th>description</th>
+	</tr>
+	<tr *ngFor="let problem of problems">
+		<td (click)=nav(problem)>{{problem.id}}</td>
+		<td (click)=nav(problem)>{{problem.name}}</td>
+		<td (click)=nav(problem)>{{problem.poster}}</td>
+		<td (click)=nav(problem)>{{problem.description}}</td>
+	</tr>
+</table>

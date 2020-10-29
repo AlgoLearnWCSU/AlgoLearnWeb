@@ -10,8 +10,8 @@ export class NavbarComponent implements OnInit {
 
 	links = [
 		{ title: 'Home', path: '/home' },
+		{ title: 'Learn', path: '/learn' },
 		{ title: 'Problems', path: '/problem' },
-		{ title: 'Page 3', path: '/page3' },
 		{ title: 'Page 4', path: '/page4' },
 	];
 

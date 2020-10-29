@@ -1,1 +1,6 @@
-<p>problem works!</p>
+<p *ngIf="problem != null">{{ problem.description }}</p>
+<label for="code-editor" class="w-100">
+	Coding IDE
+	<div id="code-editor" #codeEditor></div>
+</label>
+<p *ngIf="codeEditor != null">code: {{getCode()}}</p>

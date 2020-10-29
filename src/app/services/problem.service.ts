@@ -23,4 +23,8 @@ export class ProblemService {
 	getProblems() {
 		return this.http.get<Problem[]>(`${environment.apiBase}/problem`);
 	}
+
+	getProblemById(id: number) {
+		return this.http.get<Problem>(`${environment.apiBase}/problem/${id}`);
+	}
 }

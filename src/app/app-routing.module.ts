@@ -7,7 +7,6 @@ import { ProblemListComponent } from './problem/problem-list/problem-list.compon
 import { ProblemComponent } from './problem/problem/problem.component';
 
 const routes: Routes = [
-	{ path: '', redirectTo: 'home', pathMatch: 'full' },
 	{ path: 'home', component: HomeComponent },
 	{ path: 'problem', component: ProblemListComponent },
 	{ path: 'problem/solve/:id', component: ProblemComponent },

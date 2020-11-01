@@ -7,6 +7,7 @@ import { ProblemListComponent } from './problem/problem-list/problem-list.compon
 import { ProblemComponent } from './problem/problem/problem.component';
 
 const routes: Routes = [
+	{ path: '', component: HomeComponent},
 	{ path: 'home', component: HomeComponent },
 	{ path: 'problem', component: ProblemListComponent },
 	{ path: 'problem/solve/:id', component: ProblemComponent },

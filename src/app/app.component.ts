@@ -19,8 +19,8 @@ export class AppComponent implements OnInit {
 
 	ngOnInit() {
 		this.route.queryParams.subscribe(params => {
-			if (params['code'] != null) {
-				console.log("Logged in!")
+			if (params['jwt'] != null) {
+				console.log("Logged in!, ", params['jwt'])
 			}
 		})
 	}

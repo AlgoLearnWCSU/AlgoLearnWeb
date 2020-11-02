@@ -7,6 +7,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -18,9 +21,7 @@ import { ProblemListComponent } from './problem/problem-list/problem-list.compon
 import { ProblemFormComponent } from './problem/problem-form/problem-form.component';
 import { UserHubComponent } from './user-hub/user-hub.component';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
+
 
 
 @NgModule({
@@ -31,7 +32,7 @@ import { MatIconModule } from '@angular/material/icon';
 		ProblemComponent,
 		ProblemListComponent,
 		ProblemFormComponent,
-		UserHubComponent
+		UserHubComponent,
 	],
 	imports: [
 		BrowserModule,

@@ -4,8 +4,8 @@
 
 export const environment = {
 	production: false,
-	apiBase: 'http://32.212.188.28:8080',
-	gitHubClientId: '419787e6ecba195ec567'
+	apiBase: 'https://32.212.188.28:8443',
+	gitHubClientId: 'Iv1.500c711bc765c8f5'
 };
 
 /*

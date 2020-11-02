@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 
 export interface Problem {
 	id: number,
-	// name: string,
+	name: string,
 	poster: string,
 	description: string,
 	reviewed: boolean

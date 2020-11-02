@@ -10,6 +10,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -20,6 +21,9 @@ import { ProblemComponent } from './problem/problem/problem.component';
 import { ProblemListComponent } from './problem/problem-list/problem-list.component';
 import { ProblemFormComponent } from './problem/problem-form/problem-form.component';
 import { UserHubComponent } from './user-hub/user-hub.component';
+import { LearnComponent } from './learn/learn.component';
+
+
 
 
 
@@ -33,6 +37,7 @@ import { UserHubComponent } from './user-hub/user-hub.component';
 		ProblemListComponent,
 		ProblemFormComponent,
 		UserHubComponent,
+		LearnComponent
 	],
 	imports: [
 		BrowserModule,
@@ -45,7 +50,8 @@ import { UserHubComponent } from './user-hub/user-hub.component';
 		MatChipsModule,
 		MatFormFieldModule,
 		MatInputModule,
-		MatIconModule
+		MatIconModule,
+		MatExpansionModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

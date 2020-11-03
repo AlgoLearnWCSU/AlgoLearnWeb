@@ -22,8 +22,4 @@ export class ProblemListComponent implements OnInit {
 			data => this.problems = data,
 			err => console.error(err));
 	}
-
-	nav(problem: Problem) {
-		this.router.navigate(['problem', 'solve', problem.id])
-	}
 }

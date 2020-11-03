@@ -1,4 +1,11 @@
-<div class="d-inline-block float-right">
-	<a [href]="'https://github.com/login/oauth/authorize?client_id=' + client_id" class="btn btn-primary mr-3">Login
+<div *ngIf="!userService.isLoggedIn" class="d-inline-block float-right">
+	<a (click)="saveRoute()" [href]="'https://github.com/login/oauth/authorize?client_id=' + client_id"
+		class="btn btn-primary mr-3">Login
 		with GitHub</a>
+</div>
+<div *ngIf="userService.isLoggedIn" class="d-inline-block float-right">
+	<div class="row">
+		<p class="my-auto mr-3">Hello {{userService.username}}</p>
+		<img class="mr-3 profile-pic" [src]="userService.avatar_url" width="40" height="40">
+	</div>
 </div>

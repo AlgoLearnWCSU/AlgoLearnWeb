@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { UserService } from '../services/user.service';
 
 @Component({
 	selector: 'app-user-hub',
@@ -10,9 +12,16 @@ export class UserHubComponent implements OnInit {
 
 	client_id = environment.gitHubClientId;
 
-	constructor() { }
+	constructor(
+		private router: Router,
+		public userService: UserService
+	) { }
 
 	ngOnInit(): void {
+	}
+
+	saveRoute() {
+		localStorage.setItem('loginCallbackUrl', this.router.url);
 	}
 
 }

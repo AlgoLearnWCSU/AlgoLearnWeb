@@ -35,6 +35,10 @@ $AlgoLearnWeb-theme: mat-dark-theme(
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 
+* {
+	font-family: Consolas !important;
+}
+
 .row {
 	width: 100% !important;
 	margin-left: 0 !important;
@@ -46,7 +50,6 @@ body {
 	color: white !important;
 	min-height: 100%;
 	margin: 0;
-	font-family: Consolas !important;
 }
 
 html {

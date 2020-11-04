@@ -35,7 +35,7 @@ $AlgoLearnWeb-theme: mat-dark-theme(
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
 
-* {
+*:not(pre) {
 	font-family: Consolas !important;
 }
 

@@ -22,6 +22,7 @@ import { ProblemListComponent } from './problem/problem-list/problem-list.compon
 import { ProblemFormComponent } from './problem/problem-form/problem-form.component';
 import { UserHubComponent } from './user-hub/user-hub.component';
 import { LearnComponent } from './learn/learn.component';
+import { BubbleSortComponent } from './learn/bubble-sort/bubble-sort.component';
 
 @NgModule({
 	declarations: [
@@ -32,7 +33,8 @@ import { LearnComponent } from './learn/learn.component';
 		ProblemListComponent,
 		ProblemFormComponent,
 		UserHubComponent,
-		LearnComponent
+		LearnComponent,
+		BubbleSortComponent
 	],
 	imports: [
 		BrowserModule,

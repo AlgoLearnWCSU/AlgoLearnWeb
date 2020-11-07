@@ -2,7 +2,11 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { BubbleSortComponent } from './learn/bubble-sort/bubble-sort.component';
+import { InsertionSortComponent } from './learn/insertion-sort/insertion-sort.component';
 import { LearnComponent } from './learn/learn.component';
+import { MergeSortComponent } from './learn/merge-sort/merge-sort.component';
+import { QuickSortComponent } from './learn/quick-sort/quick-sort.component';
+import { SelectionSortComponent } from './learn/selection-sort/selection-sort.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProblemFormComponent } from './problem/problem-form/problem-form.component';
 import { ProblemListComponent } from './problem/problem-list/problem-list.component';
@@ -17,6 +21,10 @@ const routes: Routes = [
 	{ path: 'problem/edit/:id', component: ProblemFormComponent },
 	{ path: 'learn', component: LearnComponent },
 	{ path: 'learn/bubble-sort', component: BubbleSortComponent },
+	{ path: 'learn/merge-sort', component: MergeSortComponent },
+	{ path: 'learn/insertion-sort', component: InsertionSortComponent },
+	{ path: 'learn/quick-sort', component: QuickSortComponent },
+	{ path: 'learn/selection-sort', component: SelectionSortComponent },
 	{ path: '**', component: NotFoundComponent }
 ];
 

@@ -23,6 +23,10 @@ import { ProblemFormComponent } from './problem/problem-form/problem-form.compon
 import { UserHubComponent } from './user-hub/user-hub.component';
 import { LearnComponent } from './learn/learn.component';
 import { BubbleSortComponent } from './learn/bubble-sort/bubble-sort.component';
+import { MergeSortComponent } from './learn/merge-sort/merge-sort.component';
+import { InsertionSortComponent } from './learn/insertion-sort/insertion-sort.component';
+import { QuickSortComponent } from './learn/quick-sort/quick-sort.component';
+import { SelectionSortComponent } from './learn/selection-sort/selection-sort.component';
 
 @NgModule({
 	declarations: [
@@ -34,7 +38,11 @@ import { BubbleSortComponent } from './learn/bubble-sort/bubble-sort.component';
 		ProblemFormComponent,
 		UserHubComponent,
 		LearnComponent,
-		BubbleSortComponent
+		BubbleSortComponent,
+		MergeSortComponent,
+		InsertionSortComponent,
+		QuickSortComponent,
+		SelectionSortComponent
 	],
 	imports: [
 		BrowserModule,

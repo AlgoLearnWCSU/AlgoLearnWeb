@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
+import { BubbleSortComponent } from './learn/bubble-sort/bubble-sort.component';
 import { LearnComponent } from './learn/learn.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProblemFormComponent } from './problem/problem-form/problem-form.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
 	{ path: 'problem/new', component: ProblemFormComponent },
 	{ path: 'problem/edit/:id', component: ProblemFormComponent },
 	{ path: 'learn', component: LearnComponent },
+	{ path: 'learn/bubble-sort', component: BubbleSortComponent },
 	{ path: '**', component: NotFoundComponent }
 ];
 

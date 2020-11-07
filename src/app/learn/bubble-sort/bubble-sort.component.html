@@ -1,1 +1,30 @@
-<p>bubble-sort works!</p>
+<h4 class="pt-2">Example</h4>
+<div class="divider"></div>
+<div class="pl-2">
+	<div class="row justify-content-center">
+		<p class="pr-2 my-auto">Array: </p>
+		<div *ngFor="let num of arr; index as idx" class="array-box px-2">
+			<p class="my-auto" *ngIf="idx == j || idx == j + 1 " style="font-weight: 900;"><u>{{num}}</u></p>
+			<p class="my-auto" *ngIf="!(idx == j || idx == j + 1)">{{num}}</p>
+		</div>
+	</div>
+	<div class="py-3">
+		Comparing: {{arr[j]}}, {{arr[j + 1]}}
+	</div>
+	<div class="btn-group pb-4">
+		<button class="btn btn-primary" (click)="bubbleSort()">Sort</button>
+		<button class="btn btn-secondary" (click)="nextStep()">Next Step</button>
+		<button class="btn btn-danger" (click)="randomize()">Reset</button>
+	</div>
+	<h4>Psuedocode</h4>
+	<div class="divider"></div>
+	<div class="pl-2">
+		<p>begin BubbleSort(list)</p>
+		<p class="indent-1">for all elements of list</p>
+		<p class="indent-2">if list[i] > list[i+1]</p>
+		<p class="indent-3">swap(list[i], list[i+1])</p>
+		<p class="indent-2">end if</p>
+		<p class="indent-1">end for</p>
+		<p class="indent-1">return list</p>
+		<p>end BubbleSort</p>
+	</div>

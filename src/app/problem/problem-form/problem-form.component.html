@@ -1,57 +1,74 @@
 <div>
-	<div class="header pt-2 pl-3 pr-3 mr-5">
-		<p>{{ create ? "Create A Problem" : "Edit A Problem"}}</p>
+	<div class="pt-2 mr-5">
+		<h2>{{ create ? "Create A Problem" : "Edit A Problem"}}</h2>
 	</div>
-	<div class="body pt-2 pl-3 pr-3 mr-5">
+	<div class="divider"></div>
+	<div class="pb-3 mr-5">
 		<!-- Login Form -->
 		<form *ngIf="create" (ngSubmit)="createProblem(f)" #f="ngForm">
 			<div class="row">
-				<div class="col">
-					<mat-form-field class="w-25" appearance="outline" color="primary">
-						<mat-label>Problem Name</mat-label>
-						<input matInput placeholder="Ex. Merge Sort Array">
-					</mat-form-field>
-				</div>
+				<mat-form-field class="w-50" appearance="outline" color="primary">
+					<mat-label>Problem Name</mat-label>
+					<input matInput placeholder="Ex. Merge Sort Array">
+				</mat-form-field>
 			</div>
 
 			<div class="row">
-				<div class="col">
+				<mat-form-field class="w-75" appearance="outline" color="primary">
+					<mat-label>Problem Description</mat-label>
+					<textarea rows="5" matInput
+						placeholder="Ex. Create a Merge Sort function to sort an array"></textarea>
+				</mat-form-field>
+			</div>
+			<div class="row">
+				<div class="container-fluid px-0">
+					<div class="row w-75">
+						<div *ngFor="let param of parameters; index as i; trackBy: trackByFn">
+							<mat-form-field class="mr-3" appearance="outline" color="primary">
+								<mat-label>Parameter {{i}}</mat-label>
+								<input matInput placeholder="Ex. size" [(ngModel)]="parameters[i]"
+									[ngModelOptions]="{standalone:true}">
+								<button class="btn p-0 my-auto" mat-button matSuffix mat-icon-button aria-label="Clear"
+									(click)="deleteParam(i)">
+									<mat-icon style="color: white">close</mat-icon>
+								</button>
+							</mat-form-field>
+						</div>
+					</div>
+					<button class="btn btn-primary" (click)="addParam()">Add
+						Parameter</button>
+				</div>
+			</div>
+			<div class="row pt-3">
+				<div class="w-100" *ngFor="let testCaseInput of testCaseInputs; index as i; trackBy: trackByFn">
+					<div class="pb-2">
+						<h4 class="d-inline w-100">Test Case: {{i}}</h4>
+						<button *ngIf="i > 2" class="btn float-right" mat-button matSuffix mat-icon-button
+							aria-label="Clear" (click)="deleteTestCase(i)">
+							<mat-icon style="color: white">close</mat-icon>
+						</button>
+					</div>
+					<div class="divider"></div>
 					<mat-form-field class="w-75" appearance="outline" color="primary">
-						<mat-label>Problem Description</mat-label>
-						<textarea rows="5" matInput
-							placeholder="Ex. Create a Merge Sort function to sort an array"></textarea>
+						<mat-label>Test Case Input {{i}}</mat-label>
+						<textarea rows="5" matInput placeholder="Code to initialize params"
+							[(ngModel)]="testCaseInputs[i]" [ngModelOptions]="{standalone:true}"></textarea>
+					</mat-form-field>
+					<mat-form-field class="w-75" appearance="outline" color="primary">
+						<mat-label>Test Case Output {{i}}</mat-label>
+						<textarea rows="5" matInput placeholder="Expected Output" [(ngModel)]="testCaseOutputs[i]"
+							[ngModelOptions]="{standalone:true}"></textarea>
 					</mat-form-field>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-6 pl-0">
-					<div class="container-fluid px-0">
-						<div class="row">
-							<div class="col-6" *ngFor="let param of parameters; index as i; trackBy: trackByFn">
-								<mat-form-field appearance="outline" color="primary">
-									<mat-label>Parameter {{i}}</mat-label>
-									<input matInput placeholder="Ex. size" [(ngModel)]="parameters[i]"
-										[ngModelOptions]="{standalone:true}">
-									<button class="btn p-0" mat-button matSuffix mat-icon-button aria-label="Clear"
-										(click)="deleteParam(i)">
-										<mat-icon style="color: white">close</mat-icon>
-									</button>
-								</mat-form-field>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-6 pr-0">
-					<!--<mat-chip-list class="pl-2">
-			<mat-chip *ngFor="let category of problem.categories">{{ category }}</mat-chip>
-		</mat-chip-list> -->
-				</div>
+			<div class="row pb-4">
+				<button class="btn btn-primary" (click)="addTestCase()">Add
+					Test Case</button>
 			</div>
-			<div class="row">
-				<div class="btn-group">
-					<button class="btn btn-danger" (click)="parameters.push('')">Add Parameter</button>
-					<button type="submit" class="btn btn-primary mr-3">Remove Parameter</button>
-				</div>
+			<div class="divider"></div>
+			<div class="row pt-2">
+				<button *ngIf="userService.isLoggedIn" class="btn btn-primary">Submit</button>
+				<button *ngIf="!userService.isLoggedIn" class="btn btn-primary">Login with GitHub to Submit</button>
 			</div>
 		</form>
 	</div>

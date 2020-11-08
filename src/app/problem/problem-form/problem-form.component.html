@@ -3,7 +3,7 @@
 		<h2>{{ create ? "Create A Problem" : "Edit A Problem"}}</h2>
 	</div>
 	<div class="divider"></div>
-	<div class="pb-3 mr-5">
+	<div class="pb-3">
 		<!-- Login Form -->
 		<form *ngIf="create" (ngSubmit)="createProblem(f)" #f="ngForm">
 			<div class="row">

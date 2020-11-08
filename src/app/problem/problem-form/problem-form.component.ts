@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-	encapsulation: ViewEncapsulation.None,
 	selector: 'app-problem-form',
 	templateUrl: './problem-form.component.html',
 	styleUrls: ['./problem-form.component.scss']

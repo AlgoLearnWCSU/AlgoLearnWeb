@@ -11,6 +11,35 @@ export class BubbleSortComponent implements OnInit {
 	i = 0;
 	j = 0;
 
+	bubbleSortJSCode = `function bubbleSort(arr) {
+	for (let i = 0; i < arr.length - 1; ++i) {
+		for (let j = 0; j < arr.length - i - 1; ++j) {
+			if (arr[j] > arr[j + 1]) {
+				const temp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = temp;
+			}
+		}
+	}
+}
+`
+
+	bubbleSortPsuedocode = `procedure bubbleSort(A : list of sortable items)
+	n := length(A)
+	repeat
+		swapped := false
+		for i := 1 to n-1 inclusive do
+			/* if this pair is out of order */
+			if A[i-1] > A[i] then
+				/* swap them and remember something changed */
+				swap(A[i-1], A[i])
+				swapped := true
+			end if
+		end for
+	until not swapped
+end procedure
+`
+
 	constructor() { }
 
 	ngOnInit(): void {

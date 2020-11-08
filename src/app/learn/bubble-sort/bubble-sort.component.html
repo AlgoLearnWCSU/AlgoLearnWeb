@@ -1,6 +1,6 @@
 <h4 class="pt-2">Example</h4>
 <div class="divider"></div>
-<div class="pl-2">
+<div>
 	<div class="row justify-content-center">
 		<p class="pr-2 my-auto">Array: </p>
 		<div *ngFor="let num of arr; index as idx" class="array-box px-2">
@@ -8,23 +8,30 @@
 			<p class="my-auto" *ngIf="!(idx == j || idx == j + 1)">{{num}}</p>
 		</div>
 	</div>
-	<div class="py-3">
-		Comparing: {{arr[j]}}, {{arr[j + 1]}}
-	</div>
-	<div class="btn-group pb-4">
+	<p class="pt-3">Comparing: {{arr[j]}}, {{arr[j + 1]}}</p>
+	<div class="btn-group">
 		<button class="btn btn-primary" (click)="bubbleSort()">Sort</button>
 		<button class="btn btn-secondary" (click)="nextStep()">Next Step</button>
 		<button class="btn btn-danger" (click)="randomize()">Reset</button>
 	</div>
-	<h4>Psuedocode</h4>
-	<div class="divider"></div>
-	<div class="pl-2">
-		<p>begin BubbleSort(list)</p>
-		<p class="indent-1">for all elements of list</p>
-		<p class="indent-2">if list[i] > list[i+1]</p>
-		<p class="indent-3">swap(list[i], list[i+1])</p>
-		<p class="indent-2">end if</p>
-		<p class="indent-1">end for</p>
-		<p class="indent-1">return list</p>
-		<p>end BubbleSort</p>
-	</div>
+</div>
+
+<h4 class="pt-3">Psuedocode</h4>
+<div class="divider"></div>
+<div class="mx-auto w-75">
+	<app-code-editor [id]="0" [lang]='null' [minLines]="0" [disabled]="true" [code]="bubbleSortPsuedocode">
+	</app-code-editor>
+</div>
+
+<h4 class="pt-3">JavaScript Implementation</h4>
+<div class="divider"></div>
+<div class="mx-auto w-75">
+	<app-code-editor [id]="1" [minLines]="0" [disabled]="true" [code]="bubbleSortJSCode"></app-code-editor>
+</div>
+
+<h4 class="pt-3">Efficiency</h4>
+<div class="divider"></div>
+<div>
+	<p>Runtime: O(n<sup>2</sup>)</p>
+	<p>Space: O(1)</p>
+</div>

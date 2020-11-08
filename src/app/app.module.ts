@@ -27,6 +27,7 @@ import { MergeSortComponent } from './learn/merge-sort/merge-sort.component';
 import { InsertionSortComponent } from './learn/insertion-sort/insertion-sort.component';
 import { QuickSortComponent } from './learn/quick-sort/quick-sort.component';
 import { SelectionSortComponent } from './learn/selection-sort/selection-sort.component';
+import { CodeEditorComponent } from './code-editor/code-editor.component';
 
 @NgModule({
 	declarations: [
@@ -42,7 +43,8 @@ import { SelectionSortComponent } from './learn/selection-sort/selection-sort.co
 		MergeSortComponent,
 		InsertionSortComponent,
 		QuickSortComponent,
-		SelectionSortComponent
+		SelectionSortComponent,
+		CodeEditorComponent
 	],
 	imports: [
 		BrowserModule,

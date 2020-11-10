@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
 	selector: 'app-bubble-sort',
-	templateUrl: './bubble-sort.component.html',
-	styleUrls: ['./bubble-sort.component.scss']
+	templateUrl: './bubble-sort.component.html'
 })
 export class BubbleSortComponent implements OnInit {
 

@@ -4,7 +4,7 @@
 	<div class="row justify-content-center">
 		<p class="pr-2 my-auto">Array: </p>
 		<div *ngFor="let num of arr; index as idx" class="array-box px-2">
-			<p class="my-auto" *ngIf="idx == j || idx == j + 1 " style="font-weight: 900;"><u>{{num}}</u></p>
+			<p class="my-auto" *ngIf="idx == j || idx == j + 1" style="font-weight: 900;"><u>{{num}}</u></p>
 			<p class="my-auto" *ngIf="!(idx == j || idx == j + 1)">{{num}}</p>
 		</div>
 	</div>
@@ -19,7 +19,7 @@
 <h4 class="pt-3">Psuedocode</h4>
 <div class="divider"></div>
 <div class="mx-auto w-75">
-	<app-code-editor [id]="0" [lang]='null' [minLines]="0" [disabled]="true" [code]="bubbleSortPsuedocode">
+	<app-code-editor [id]="0" [lang]="null" [minLines]="0" [disabled]="true" [code]="bubbleSortPsuedocode">
 	</app-code-editor>
 </div>
 

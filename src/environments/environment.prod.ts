@@ -1,5 +1,5 @@
 export const environment = {
 	production: true,
-	apiBase: 'https://32.212.188.28:8443',
+	apiBase: 'https://algolearn-backend.azurewebsites.net',
 	gitHubClientId: 'Iv1.500c711bc765c8f5'
 };

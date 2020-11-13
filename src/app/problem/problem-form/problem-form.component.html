@@ -1,23 +1,24 @@
 <div>
 	<div class="pt-2 mr-5">
-		<h2>{{ create ? "Create A Problem" : "Edit A Problem"}}</h2>
+		<h2>{{ id == null ? "Create A Problem" : "Edit A Problem"}}</h2>
 	</div>
 	<div class="divider"></div>
 	<div class="pb-3">
 		<!-- Login Form -->
-		<form *ngIf="create" (ngSubmit)="createProblem(f)" #f="ngForm">
+		<form (ngSubmit)="submitProblem(f)" #f="ngForm">
 			<div class="row">
 				<mat-form-field class="w-50" appearance="outline" color="primary">
 					<mat-label>Problem Name</mat-label>
-					<input matInput placeholder="Ex. Merge Sort Array">
+					<input matInput placeholder="Ex. Merge Sort Array" [(ngModel)]="problem.name"
+						[ngModelOptions]="{standalone: true}">
 				</mat-form-field>
 			</div>
 
 			<div class="row">
 				<mat-form-field class="w-75" appearance="outline" color="primary">
 					<mat-label>Problem Description</mat-label>
-					<textarea rows="5" matInput
-						placeholder="Ex. Create a Merge Sort function to sort an array"></textarea>
+					<textarea rows="5" matInput placeholder="Ex. Create a Merge Sort function to sort an array"
+						[(ngModel)]="problem.description" [ngModelOptions]="{standalone: true}"></textarea>
 				</mat-form-field>
 			</div>
 			<div class="row">
@@ -26,7 +27,7 @@
 						<div *ngFor="let param of parameters; index as i; trackBy: trackByFn">
 							<mat-form-field class="mr-3" appearance="outline" color="primary">
 								<mat-label>Parameter {{i}}</mat-label>
-								<input matInput placeholder="Ex. size" [(ngModel)]="parameters[i]"
+								<input matInput placeholder="Ex. size" [(ngModel)]="parameters[i].name"
 									[ngModelOptions]="{standalone:true}">
 								<button class="btn p-0 my-auto" mat-button matSuffix mat-icon-button aria-label="Clear"
 									(click)="deleteParam(i)">
@@ -40,7 +41,7 @@
 				</div>
 			</div>
 			<div class="row pt-3">
-				<div class="w-100" *ngFor="let testCaseInput of testCaseInputs; index as i; trackBy: trackByFn">
+				<div class="w-100" *ngFor="let testCase of testCases; index as i; trackBy: trackByFn">
 					<div class="pb-2">
 						<h4 class="d-inline w-100">Test Case: {{i}}</h4>
 						<button *ngIf="i > 2" class="btn float-right" mat-button matSuffix mat-icon-button
@@ -52,12 +53,12 @@
 					<mat-form-field class="w-75" appearance="outline" color="primary">
 						<mat-label>Test Case Input {{i}}</mat-label>
 						<textarea rows="5" matInput placeholder="Code to initialize params"
-							[(ngModel)]="testCaseInputs[i]" [ngModelOptions]="{standalone:true}"></textarea>
+							[(ngModel)]="testCases[i].sampleInput" [ngModelOptions]="{standalone:true}"></textarea>
 					</mat-form-field>
 					<mat-form-field class="w-75" appearance="outline" color="primary">
 						<mat-label>Test Case Output {{i}}</mat-label>
-						<textarea rows="5" matInput placeholder="Expected Output" [(ngModel)]="testCaseOutputs[i]"
-							[ngModelOptions]="{standalone:true}"></textarea>
+						<textarea rows="5" matInput placeholder="Expected Output"
+							[(ngModel)]="testCases[i].sampleOutput" [ngModelOptions]="{standalone:true}"></textarea>
 					</mat-form-field>
 				</div>
 			</div>
@@ -67,8 +68,7 @@
 			</div>
 			<div class="divider"></div>
 			<div class="row pt-2">
-				<button *ngIf="userService.isLoggedIn" class="btn btn-primary">Submit</button>
-				<button *ngIf="!userService.isLoggedIn" class="btn btn-primary">Login with GitHub to Submit</button>
+				<button class="btn btn-primary">Submit</button>
 			</div>
 		</form>
 	</div>

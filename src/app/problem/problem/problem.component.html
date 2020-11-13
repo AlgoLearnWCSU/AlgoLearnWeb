@@ -1,3 +1,16 @@
-<p *ngIf="problem != null">{{ problem.description }}</p>
-<p>Editor:</p>
-<app-code-editor [id]="5" [saveId]="saveId"></app-code-editor>
+<div *ngIf="problem != null">
+	<h2>{{problem.name}}</h2>
+	<div class="divider"></div>
+	<p>{{ problem.description }}</p>
+</div>
+<div *ngIf="params != null && params.length > 0">
+	<h5>Parameters</h5>
+	<div class="divider"></div>
+	<div class="row">
+		<div *ngFor="let param of params;index as idx">
+			<p *ngIf="idx === 0">{{param.name}}</p>
+			<p *ngIf="idx !== 0">, {{param.name}}</p>
+		</div>
+	</div>
+</div>
+<app-code-editor id="0" [saveId]="saveId"></app-code-editor>

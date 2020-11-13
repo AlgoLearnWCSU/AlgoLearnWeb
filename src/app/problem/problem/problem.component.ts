@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Problem, ProblemService } from 'src/app/services/problem.service';
+import { Parameter, Problem, ProblemService } from 'src/app/services/problem.service';
 
 @Component({
 	selector: 'app-problem',
@@ -10,6 +10,7 @@ import { Problem, ProblemService } from 'src/app/services/problem.service';
 export class ProblemComponent {
 	problem: Problem;
 	saveId: string;
+	params: Parameter[];
 
 	constructor(
 		private problemService: ProblemService,
@@ -19,13 +20,19 @@ export class ProblemComponent {
 	ngOnInit() {
 		//get problem data from DB
 		this.route.params.subscribe(params => {
-			if (params['id'] != null)
-				this.problemService.getProblemById(params['id']).subscribe(
+			if (params.id != null) {
+				this.saveId
+				this.problemService.getProblemById(params.id).subscribe(
 					problem => {
 						this.problem = problem;
-						this.saveId = `problem: ${problem.id}`;
 					}
 				);
+				this.problemService.getParamsByProblemId(params.id).subscribe(
+					params => {
+						this.params = params;
+					}
+				);
+			}
 		});
 	}
 }

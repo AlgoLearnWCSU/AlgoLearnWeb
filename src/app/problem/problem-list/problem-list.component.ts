@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Problem, ProblemService } from 'src/app/services/problem.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
 	selector: 'app-problem-list',
@@ -9,12 +9,11 @@ import { Problem, ProblemService } from 'src/app/services/problem.service';
 })
 export class ProblemListComponent implements OnInit {
 
-	displayedColumns: string[] = ['id', 'name', 'poster', 'description'];
 	problems: Problem[];
 
 	constructor(
-		private router: Router,
-		public problemService: ProblemService
+		public userService: UserService,
+		private problemService: ProblemService
 	) { }
 
 	ngOnInit(): void {

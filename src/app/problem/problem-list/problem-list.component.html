@@ -1,15 +1,20 @@
-<button class="btn btn-primary float-right" routerLink="/problem/new">Create New Problem</button>
-<mat-list *ngIf=" problems !=null" class="pt-5">
-	<mat-list-item *ngFor="let problem of problems" class="d-block" style="width: fit-content">
-		<a routerLink="/problem/solve/{{problem.id}}">{{problem.name}}</a>
-		{{": " + problem.description | slice:0:50-problem.name.length}}
-		<span *ngIf="problem.description.length + problem.name.length + 2> 50">...</span>
-		<mat-chip-list class="pl-2">
-			<!-- <mat-chip *ngFor="let category of problem.categories">{{ category }}</mat-chip> -->
-			<mat-chip>test</mat-chip>
-		</mat-chip-list>
-		<a routerLink="/problem/edit/{{problem.id}}">
-			<mat-icon class="pl-2">assignment</mat-icon>
-		</a>
-	</mat-list-item>
-</mat-list>
+<div class="row justify-content-end">
+	<button *ngIf="userService.isLoggedIn" class="btn btn-primary float-right" routerLink="/problem/new">Create New
+		Problem</button>
+</div>
+<div class="row">
+	<mat-list *ngIf=" problems !=null">
+		<mat-list-item *ngFor="let problem of problems" class="d-block" style="width: fit-content">
+			<a routerLink="/problem/solve/{{problem.id}}">{{problem.name}}</a>
+			{{": " + problem.description | slice:0:50-problem.name.length}}
+			<span *ngIf="problem.description.length + problem.name.length + 2> 50">...</span>
+			<mat-chip-list class="pl-2">
+				<!-- <mat-chip *ngFor="let category of problem.categories">{{ category }}</mat-chip> -->
+				<mat-chip>test</mat-chip>
+			</mat-chip-list>
+			<a routerLink="/problem/edit/{{problem.id}}">
+				<mat-icon class="pl-2">assignment</mat-icon>
+			</a>
+		</mat-list-item>
+	</mat-list>
+</div>

@@ -70,6 +70,18 @@ html {
 	border: 1px solid darkgray;
 }
 
+a:hover svg path {
+	fill: #0056b3 !important;
+}
+
+a svg path{
+	fill: $blue !important;
+}
+
+svg:hover path{
+	fill: gray !important;
+}
+
 svg path{
 	fill: white !important;
 }

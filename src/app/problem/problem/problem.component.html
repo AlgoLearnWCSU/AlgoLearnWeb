@@ -14,3 +14,7 @@
 	</div>
 </div>
 <app-code-editor id="0" [saveId]="saveId"></app-code-editor>
+
+<h2 class="pt-3">Comments</h2>
+<div class="divider"></div>
+<app-problem-discussion *ngIf="problem!=null" [id]="problem.id"></app-problem-discussion>

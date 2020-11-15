@@ -29,6 +29,10 @@ export class UserService {
 			});
 	}
 
+	getUserByUsername(username: string) {
+		return this.http.get<User>(`${environment.apiBase}/user/${username}`);
+	}
+
 	set jwt(jwt: string) {
 		this._jwt = jwt;
 	}

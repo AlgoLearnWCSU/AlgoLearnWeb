@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material/card';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -28,6 +29,7 @@ import { InsertionSortComponent } from './learn/insertion-sort/insertion-sort.co
 import { QuickSortComponent } from './learn/quick-sort/quick-sort.component';
 import { SelectionSortComponent } from './learn/selection-sort/selection-sort.component';
 import { CodeEditorComponent } from './code-editor/code-editor.component';
+import { ProblemDiscussionComponent } from './problem/problem-discussion/problem-discussion.component';
 
 @NgModule({
 	declarations: [
@@ -44,7 +46,8 @@ import { CodeEditorComponent } from './code-editor/code-editor.component';
 		InsertionSortComponent,
 		QuickSortComponent,
 		SelectionSortComponent,
-		CodeEditorComponent
+		CodeEditorComponent,
+		ProblemDiscussionComponent
 	],
 	imports: [
 		BrowserModule,
@@ -58,7 +61,8 @@ import { CodeEditorComponent } from './code-editor/code-editor.component';
 		MatFormFieldModule,
 		MatInputModule,
 		MatIconModule,
-		MatExpansionModule
+		MatExpansionModule,
+		MatCardModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

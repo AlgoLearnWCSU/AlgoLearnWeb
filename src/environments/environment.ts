@@ -4,8 +4,9 @@
 
 export const environment = {
 	production: false,
-	apiBase: 'https://algolearn-backend.azurewebsites.net',
-	gitHubClientId: 'Iv1.2c3f97ee17f544a1'
+	apiBase: 'http://localhost',
+	gitHubClientId: 'Iv1.2c3f97ee17f544a1',
+	environment: 'local'
 };
 
 /*

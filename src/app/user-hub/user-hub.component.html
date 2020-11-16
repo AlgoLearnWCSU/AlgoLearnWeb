@@ -7,5 +7,8 @@
 	<div class="row">
 		<p class="my-auto mr-3">Hello {{userService.username}}</p>
 		<img class="mr-3 profile-pic" [src]="userService.avatar_url" width="40" height="40">
+		<button type="button" class="btn btn-primary" (click)="userService.loggout()">
+			<i class="fas fa-sign-out-alt"></i>
+		</button>
 	</div>
 </div>

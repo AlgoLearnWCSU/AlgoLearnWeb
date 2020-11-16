@@ -12,34 +12,21 @@ export class AppComponent implements OnInit {
 	title = 'AlgoLearnWeb';
 
 	constructor(
-		private http: HttpClient,
 		private route: ActivatedRoute,
-		private router: Router,
 		private userService: UserService
-	) {
-
-	}
+	) { }
 
 	ngOnInit() {
-		this.route.queryParams.subscribe(params => {
-			if (params['jwt'] != null && params['username'] != null) {
-				// Set user info
-				this.userService.jwt = params['jwt'];
-				this.userService.setUser(params['username']);
-
-				// Log sign in
-				console.log(`Logged in as ${params['username']}!`, params['jwt']);
-
-				// Navigate to home or page from where login was triggered
-				const loginCallbackUrl = localStorage.getItem('loginCallbackUrl');
-				if (loginCallbackUrl != null) {
-					localStorage.removeItem('loginCallbackUrl');
-					this.router.navigateByUrl(loginCallbackUrl);
+		const loggedIn = localStorage.getItem('loggedIn');
+		if (loggedIn == null || !JSON.parse(loggedIn)) {
+			this.route.queryParams.subscribe(params => {
+				if (params.code != null) {
+					this.userService.login(params.code)
 				}
-				else {
-					this.router.navigate([]);
-				}
-			}
-		})
+			});
+		}
+		else {
+			this.userService.refresh();
+		}
 	}
 }

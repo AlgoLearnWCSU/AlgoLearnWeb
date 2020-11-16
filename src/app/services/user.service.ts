@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 export interface User {
@@ -8,6 +9,12 @@ export interface User {
 	email: string,
 	avatar_url: string,
 	admin: boolean
+}
+
+export interface AuthResponse {
+	username: string,
+	jwt: string,
+	expires_in: number
 }
 
 @Injectable({
@@ -19,18 +26,78 @@ export class UserService {
 	private _jwt: string;
 
 	constructor(
-		private http: HttpClient
+		private http: HttpClient,
+		private router: Router
 	) { }
 
 	setUser(username: string) {
 		this.http.get<User>(`${environment.apiBase}/user/${username}`)
 			.subscribe(user => {
 				this.user = user;
+				console.log('User logged in as', user.username);
 			});
 	}
 
 	getUserByUsername(username: string) {
 		return this.http.get<User>(`${environment.apiBase}/user/${username}`);
+	}
+
+	login(code: string) {
+		console.log('stack trace for refresh: ', new Error().stack)
+		return this.http.post<AuthResponse>(`${environment.apiBase}/auth/login/${environment.environment}`, {
+			code
+		}, {
+			headers: { 'Content-Type': 'application/json' },
+			withCredentials: true,
+		}).subscribe(
+			res => {
+				this.jwt = res.jwt;
+				this.setUser(res.username);
+				localStorage.setItem('loggedIn', JSON.stringify(true));
+
+				// Navigate to home or page from where login was triggered
+				const loginCallbackUrl = localStorage.getItem('loginCallbackUrl');
+				if (loginCallbackUrl != null) {
+					localStorage.removeItem('loginCallbackUrl');
+					this.router.navigateByUrl(loginCallbackUrl);
+				}
+				// else {
+				// 	this.router.navigate(['/']);
+				// }
+			}, err => {
+				console.error('Error logging in: ', err);
+				this.router.navigate(['/']);
+			}
+		);
+	}
+
+	refresh() {
+		console.log('stack trace for refresh: ', new Error().stack)
+		return this.http.get<AuthResponse>(`${environment.apiBase}/auth/refresh/${environment.environment}`, {
+			headers: { 'Content-Type': 'application/json' },
+			withCredentials: true,
+		}).subscribe(
+			res => {
+				this.jwt = res.jwt;
+				this.setUser(res.username);
+				localStorage.setItem('loggedIn', JSON.stringify(true));
+
+				// Navigate to home or page from where login was triggered
+				const loginCallbackUrl = localStorage.getItem('loginCallbackUrl');
+				if (loginCallbackUrl != null) {
+					localStorage.removeItem('loginCallbackUrl');
+					this.router.navigateByUrl(loginCallbackUrl);
+				}
+			}, err => {
+				console.log('Refresh failed, likely that user has not previously logged in: ', err);
+			}
+		);
+	}
+
+	loggout() {
+		localStorage.setItem('loggedIn', JSON.stringify(false));
+		this._jwt = null;
+		this.user = null;
 	}
 
 	set jwt(jwt: string) {

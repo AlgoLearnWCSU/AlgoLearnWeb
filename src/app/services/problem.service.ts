@@ -95,4 +95,16 @@ export class ProblemService {
 		return this.http.put<Comment>(`${environment.apiBase}/comment/${comment.id}`,
 			comment);
 	}
+
+	deleteProblem(problem: Problem) {
+		return this.http.delete(`${environment.apiBase}/problem/${problem.id}`);
+	}
+
+	deleteParameter(param: Parameter) {
+		return this.http.delete(`${environment.apiBase}/parameter/${param.paramId}`);
+	}
+
+	deleteTestCase(testCase: TestCase) {
+		return this.http.delete(`${environment.apiBase}/testcase/${testCase.id}`);
+	}
 }

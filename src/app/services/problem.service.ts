@@ -107,4 +107,8 @@ export class ProblemService {
 	deleteTestCase(testCase: TestCase) {
 		return this.http.delete(`${environment.apiBase}/testcase/${testCase.id}`);
 	}
+	
+	deleteCommentByCommentId(id: number) {
+		return this.http.delete<Comment>(`${environment.apiBase}/comment/${id}`);
+	}
 }

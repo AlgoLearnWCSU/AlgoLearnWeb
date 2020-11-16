@@ -1,20 +1,80 @@
-<div *ngFor="let comment of comments">
-	<mat-card class="comment mb-3">
-		<mat-card-header class="commentHeader ml-0">
-			<div mat-card-avatar class="commentAvatar">
-				<img style="border-radius: 50%;" width="35px" height="35px" src="{{usernameToAvatarMap[comment.commenter]}}">
+
+<mat-paginator *ngIf="comments != null" class="mb-3 rounded" [length]="comments.length"
+[pageIndex]="pageState.pageIndex"
+[pageSize]="pageState.pageSize"
+[pageSizeOptions]="[5, 10, 25, 100]"
+(page)="updateCommentView($event)">
+</mat-paginator>
+<div *ngIf="comments">
+	<div *ngFor="let comment of comments | 
+		slice:pageState.pageIndex * pageState.pageSize:
+		pageState.pageIndex * pageState.pageSize+pageState.pageSize;
+		index as idx">
+		<mat-card class="comment mb-3">
+			<mat-card-header class="commentHeader ml-0">
+				<div mat-card-avatar class="commentAvatar">
+					<img class="rounded-circle" width="35px" height="35px" [src]="usernameToAvatarMap[comment.commenter]">
+				</div>
+				<mat-card-title>{{comment.commenter}}</mat-card-title>
+			</mat-card-header>
+			<mat-card-content>
+				<p *ngIf="!isEditingComments[idx+(pageState.pageIndex*pageState.pageSize)]" class="commentBody">{{comment.comment}} 
+					<div *ngIf="!isEditingComments[idx+(pageState.pageIndex*pageState.pageSize)]" class="btn-group">
+						<button type="button" class="btn btn-primary" *ngIf="comment.commenter == userService.username"
+						(click)="editComment(idx+(pageState.pageIndex*pageState.pageSize))">
+							<i class="far fa-edit"></i>
+						</button> 
+						<button type="button" class="btn btn-danger" *ngIf="comment.commenter == userService.username"
+						(click)="deleteComment(idx+(pageState.pageIndex*pageState.pageSize))">
+							<i class="fas fa-times"></i>
+						</button> 
+					</div>
+				<form *ngIf="isEditingComments[idx+(pageState.pageIndex*pageState.pageSize)]" (ngSubmit)="submitEditComment(g, idx+(pageState.pageIndex*pageState.pageSize), commentTextarea)" #g="ngForm">
+					<mat-form-field class="w-100" appearance="outline" color="primary">
+						<mat-label>Edit your comment</mat-label>
+						<textarea #commentTextarea rows="5" matInput [placeholder]="comments[idx+(pageState.pageIndex*pageState.pageSize)].comment" 
+							[value]="comments[idx+(pageState.pageIndex*pageState.pageSize)].comment" name="comment">{{comments[idx+(pageState.pageIndex*pageState.pageSize)].comment}}</textarea>
+					</mat-form-field>
+					<div class="row pt-2 btn-group">
+						<button type="submit" class="btn btn-primary">
+							<i class="far fa-paper-plane"></i>
+						</button>
+						<button type="button" class="btn btn-danger" (click)="cancelEditComment(idx+(pageState.pageIndex*pageState.pageSize))">
+							<i class="fas fa-times"></i>
+						</button>
+					</div>
+				</form>
+			</mat-card-content>
+			<mat-card-footer class="mx-0">
+				<p class="commentTime">{{comment.timestamp}}</p>
+			</mat-card-footer>
+		</mat-card>
+	</div>
+</div>
+<div *ngIf="userService.isLoggedIn">
+	<mat-card class="mb-3">
+		<mat-card-header class="ml-0">
+			<div mat-card-avatar>
+				<img class="rounded-circle" width="35px" height="35px" [src]="userService.avatar_url">
 			</div>
-			<mat-card-title>{{comment.commenter}}</mat-card-title>
+			<mat-card-title>{{userService.username}}</mat-card-title>
 		</mat-card-header>
 		<mat-card-content>
-			<p class="commentBody">{{comment.comment}} 
-				<button type="button" class="btn btn-primary" *ngIf="comment.commenter == userService.username">
-					<i class="far fa-edit"></i>
-				</button> 
-			</p>
+			<form (ngSubmit)="submitComment(f)" #f="ngForm">
+				<div class="row">
+					<mat-form-field class="w-100" appearance="outline" color="primary">
+						<mat-label *ngIf="comments.length != 0">Join the conversation!</mat-label>
+						<mat-label *ngIf="comments.length == 0">Start the conversation!</mat-label>
+						<textarea rows="5" matInput  
+							[(ngModel)]="newComment.comment" name="comment"></textarea>
+					</mat-form-field>
+				</div>
+				<div class="row pt-2">
+					<button type="submit" class="btn btn-primary">
+						<i class="far fa-paper-plane"></i>
+					</button>
+				</div>
+			</form>
 		</mat-card-content>
-		<mat-card-footer class="mx-0">
-			<p class="commentTime">{{comment.timestamp}}</p>
-		</mat-card-footer>
 	</mat-card>
 </div>

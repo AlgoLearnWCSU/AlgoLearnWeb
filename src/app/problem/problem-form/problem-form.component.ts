@@ -11,7 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 export class ProblemFormComponent implements OnInit {
 
 	id: number;
-	problem: Problem
+	problem: Problem;
 	parameters: Parameter[] = [];
 	testCases: TestCase[] = [];
 
@@ -64,20 +64,20 @@ export class ProblemFormComponent implements OnInit {
 
 	async submitProblem(form: NgForm) {
 
-		if (form.form.status === "VALID") {
+		if (form.form.status === 'VALID') {
 			if (this.id == null) {
 				try {
 					this.problem.poster = this.userService.username;
 					console.log('Trying to create problem: ', this.problem);
 					this.id = (await this.problemService.createProblem(this.problem).toPromise()).id;
-					for (let param of this.parameters) {
+					for (const param of this.parameters) {
 						param.problem = this.id;
 						this.problemService.createParameter(param).subscribe(
 							res => console.log(`Parameter created: ${res}`),
 							err => console.error(err));
 					}
 
-					for (let testCase of this.testCases) {
+					for (const testCase of this.testCases) {
 						testCase.problem = this.id;
 						this.problemService.createTestCase(testCase).subscribe(
 							res => console.log(`Test Case created: ${res}`),
@@ -91,16 +91,18 @@ export class ProblemFormComponent implements OnInit {
 					.subscribe(
 						res => console.log(`Problem edited: ${res}`),
 						err => console.error(err));
-				for (let param of this.parameters)
+				for (const param of this.parameters) {
 					this.problemService.editParameter(param)
 						.subscribe(
 							res => console.log(`Param edited: ${res}`),
 							err => console.error(err));
-				for (let testCase of this.testCases)
+				}
+				for (const testCase of this.testCases) {
 					this.problemService.editTestCase(testCase)
 						.subscribe(
 							res => console.log(`Test Case edited: ${res}`),
 							err => console.error(err));
+				}
 			}
 
 		}

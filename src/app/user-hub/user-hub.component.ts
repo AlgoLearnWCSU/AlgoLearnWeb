@@ -22,6 +22,7 @@ export class UserHubComponent implements OnInit {
 
 	saveRoute() {
 		localStorage.setItem('loginCallbackUrl', this.router.url);
+		localStorage.setItem('loggedIn', JSON.stringify('false'));
 	}
 
 }

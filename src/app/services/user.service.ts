@@ -43,7 +43,6 @@ export class UserService {
 	}
 
 	login(code: string) {
-		console.log('stack trace for refresh: ', new Error().stack)
 		return this.http.post<AuthResponse>(`${environment.apiBase}/auth/login/${environment.environment}`, {
 			code
 		}, {
@@ -61,12 +60,12 @@ export class UserService {
 					localStorage.removeItem('loginCallbackUrl');
 					this.router.navigateByUrl(loginCallbackUrl);
 				}
-				// else {
-				// 	this.router.navigate(['/']);
-				// }
+				else {
+					this.router.navigate(['/home']);
+				}
 			}, err => {
 				console.error('Error logging in: ', err);
-				this.router.navigate(['/']);
+				this.router.navigate(['/home']);
 			}
 		);
 	}

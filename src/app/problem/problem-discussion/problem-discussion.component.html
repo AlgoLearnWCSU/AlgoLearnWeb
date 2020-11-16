@@ -1,5 +1,5 @@
 
-<mat-paginator *ngIf="comments != null" class="mb-3 rounded" [length]="comments.length"
+<mat-paginator *ngIf="comments != null" class="mb-3 mt-2 rounded" [length]="comments.length"
 [pageIndex]="pageState.pageIndex"
 [pageSize]="pageState.pageSize"
 [pageSizeOptions]="[5, 10, 25, 100]"
@@ -10,16 +10,16 @@
 		slice:pageState.pageIndex * pageState.pageSize:
 		pageState.pageIndex * pageState.pageSize+pageState.pageSize;
 		index as idx">
-		<mat-card class="comment mb-3">
-			<mat-card-header class="commentHeader ml-0">
-				<div mat-card-avatar class="commentAvatar">
+		<mat-card class="mb-3">
+			<mat-card-header class="ml-0">
+				<div mat-card-avatar>
 					<img class="rounded-circle" width="35px" height="35px" [src]="usernameToAvatarMap[comment.commenter]">
 				</div>
 				<mat-card-title>{{comment.commenter}}</mat-card-title>
 			</mat-card-header>
-			<mat-card-content>
-				<p *ngIf="!isEditingComments[idx+(pageState.pageIndex*pageState.pageSize)]" class="commentBody">{{comment.comment}} 
-					<div *ngIf="!isEditingComments[idx+(pageState.pageIndex*pageState.pageSize)]" class="btn-group">
+			<mat-card-content class="mb-0">
+				<p *ngIf="!isEditingComments[idx+(pageState.pageIndex*pageState.pageSize)]" class="my-0">{{comment.comment}}
+					<div *ngIf="!isEditingComments[idx+(pageState.pageIndex*pageState.pageSize)]" class="my-2 btn-group">
 						<button type="button" class="btn btn-primary" *ngIf="comment.commenter == userService.username"
 						(click)="editComment(idx+(pageState.pageIndex*pageState.pageSize))">
 							<i class="far fa-edit"></i>
@@ -46,7 +46,7 @@
 				</form>
 			</mat-card-content>
 			<mat-card-footer class="mx-0">
-				<p class="commentTime">{{comment.timestamp}}</p>
+				<p class="commentTime">{{comment.timestamp | date:'short'}}</p>
 			</mat-card-footer>
 		</mat-card>
 	</div>
@@ -63,8 +63,8 @@
 			<form (ngSubmit)="submitComment(f)" #f="ngForm">
 				<div class="row">
 					<mat-form-field class="w-100" appearance="outline" color="primary">
-						<mat-label *ngIf="comments.length != 0">Join the conversation!</mat-label>
-						<mat-label *ngIf="comments.length == 0">Start the conversation!</mat-label>
+						<mat-label *ngIf="comments && comments.length != 0">Join the conversation!</mat-label>
+						<mat-label *ngIf="comments && comments.length == 0">Start the conversation!</mat-label>
 						<textarea rows="5" matInput  
 							[(ngModel)]="newComment.comment" name="comment"></textarea>
 					</mat-form-field>

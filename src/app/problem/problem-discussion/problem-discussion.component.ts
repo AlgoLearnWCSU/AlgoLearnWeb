@@ -71,6 +71,16 @@ export class ProblemDiscussionComponent implements OnInit {
 
 	submitComment(form: NgForm) {
 		if (form.form.status === 'VALID') {
+			if (!this.usernameToAvatarMap[this.userService.username]) {
+				if (this.userService.avatar_url) {
+					this.usernameToAvatarMap[this.userService.username] =
+						this.userService.avatar_url;
+				}
+				else {
+					this.usernameToAvatarMap[this.userService.username] =
+						'https://icon-library.com/images/default-user-icon/default-user-icon-4.jpg';
+				}
+			}
 			this.newComment.commenter = this.userService.username;
 			this.newComment.problem = this.id;
 			console.log('Trying to create comment: ', this.newComment);
@@ -81,8 +91,6 @@ export class ProblemDiscussionComponent implements OnInit {
 					this.pageState.length = this.comments.length;
 					this.pageState.pageIndex =
 						Math.floor((this.pageState.length - 1) / this.pageState.pageSize);
-					console.log(this.pageState.length, this.pageState.pageSize,
-						this.pageState.pageIndex);
 					this.pageState.previousPageIndex = this.pageState.pageIndex - 1;
 					this.updateCommentView(this.pageState);
 				},

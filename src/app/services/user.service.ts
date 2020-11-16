@@ -50,9 +50,9 @@ export class UserService {
 			withCredentials: true,
 		}).subscribe(
 			res => {
-				this.jwt = res.jwt;
+				this._jwt = res.jwt;
 				this.setUser(res.username);
-				localStorage.setItem('loggedIn', JSON.stringify(true));
+				localStorage.setItem('loggedIn', 'true');
 
 				// Navigate to home or page from where login was triggered
 				const loginCallbackUrl = localStorage.getItem('loginCallbackUrl');
@@ -71,7 +71,6 @@ export class UserService {
 	}
 
 	refresh() {
-		console.log('stack trace for refresh: ', new Error().stack)
 		return this.http.get<AuthResponse>(`${environment.apiBase}/auth/refresh/${environment.environment}`, {
 			headers: { 'Content-Type': 'application/json' },
 			withCredentials: true,
@@ -79,7 +78,7 @@ export class UserService {
 			res => {
 				this.jwt = res.jwt;
 				this.setUser(res.username);
-				localStorage.setItem('loggedIn', JSON.stringify(true));
+				localStorage.setItem('loggedIn', 'true');
 
 				// Navigate to home or page from where login was triggered
 				const loginCallbackUrl = localStorage.getItem('loginCallbackUrl');
@@ -94,7 +93,7 @@ export class UserService {
 	}
 
 	loggout() {
-		localStorage.setItem('loggedIn', JSON.stringify(false));
+		localStorage.setItem('loggedIn', 'false');
 		this._jwt = null;
 		this.user = null;
 	}

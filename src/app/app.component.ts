@@ -18,14 +18,17 @@ export class AppComponent implements OnInit {
 
 	ngOnInit() {
 		const loggedIn = localStorage.getItem('loggedIn');
-		if (loggedIn == null || !JSON.parse(loggedIn)) {
+		if (loggedIn == null) {
+
+		}
+		else if (loggedIn === 'false') {
 			this.route.queryParams.subscribe(params => {
 				if (params.code != null) {
 					this.userService.login(params.code)
 				}
 			});
 		}
-		else {
+		else if (loggedIn === 'true') {
 			this.userService.refresh();
 		}
 	}

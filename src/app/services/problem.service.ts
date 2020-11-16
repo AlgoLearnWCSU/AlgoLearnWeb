@@ -29,7 +29,7 @@ export interface Comment {
 	id: number;
 	commenter: string;
 	problem: number;
-	timestamp: string;
+	timestamp: Date;
 	comment: string;
 }
 
@@ -107,7 +107,7 @@ export class ProblemService {
 	deleteTestCase(testCase: TestCase) {
 		return this.http.delete(`${environment.apiBase}/testcase/${testCase.id}`);
 	}
-	
+
 	deleteCommentByCommentId(id: number) {
 		return this.http.delete<Comment>(`${environment.apiBase}/comment/${id}`);
 	}

@@ -95,4 +95,8 @@ export class ProblemService {
 		return this.http.put<Comment>(`${environment.apiBase}/comment/${comment.id}`,
 			comment);
 	}
+
+	deleteCommentByCommentId(id: number) {
+		return this.http.delete<Comment>(`${environment.apiBase}/comment/${id}`);
+	}
 }

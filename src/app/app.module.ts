@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -62,7 +63,8 @@ import { ProblemDiscussionComponent } from './problem/problem-discussion/problem
 		MatInputModule,
 		MatIconModule,
 		MatExpansionModule,
-		MatCardModule
+		MatCardModule,
+		MatPaginatorModule
 	],
 	providers: [],
 	bootstrap: [AppComponent]

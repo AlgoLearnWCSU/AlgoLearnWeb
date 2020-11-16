@@ -31,6 +31,7 @@ import { QuickSortComponent } from './learn/quick-sort/quick-sort.component';
 import { SelectionSortComponent } from './learn/selection-sort/selection-sort.component';
 import { CodeEditorComponent } from './code-editor/code-editor.component';
 import { ProblemDiscussionComponent } from './problem/problem-discussion/problem-discussion.component';
+import { ProblemDiscussionPageComponent } from './problem/problem-discussion-page/problem-discussion-page.component';
 
 @NgModule({
 	declarations: [
@@ -48,7 +49,8 @@ import { ProblemDiscussionComponent } from './problem/problem-discussion/problem
 		QuickSortComponent,
 		SelectionSortComponent,
 		CodeEditorComponent,
-		ProblemDiscussionComponent
+		ProblemDiscussionComponent,
+		ProblemDiscussionPageComponent
 	],
 	imports: [
 		BrowserModule,

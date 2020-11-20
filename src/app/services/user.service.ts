@@ -53,19 +53,8 @@ export class UserService {
 				this._jwt = res.jwt;
 				this.setUser(res.username);
 				localStorage.setItem('loggedIn', 'true');
-
-				// Navigate to home or page from where login was triggered
-				const loginCallbackUrl = localStorage.getItem('loginCallbackUrl');
-				if (loginCallbackUrl != null) {
-					localStorage.removeItem('loginCallbackUrl');
-					this.router.navigateByUrl(loginCallbackUrl);
-				}
-				else {
-					this.router.navigate(['/home']);
-				}
 			}, err => {
 				console.error('Error logging in: ', err);
-				this.router.navigate(['/home']);
 			}
 		);
 	}
@@ -79,13 +68,6 @@ export class UserService {
 				this.jwt = res.jwt;
 				this.setUser(res.username);
 				localStorage.setItem('loggedIn', 'true');
-
-				// Navigate to home or page from where login was triggered
-				const loginCallbackUrl = localStorage.getItem('loginCallbackUrl');
-				if (loginCallbackUrl != null) {
-					localStorage.removeItem('loginCallbackUrl');
-					this.router.navigateByUrl(loginCallbackUrl);
-				}
 			}, err => {
 				console.log('Refresh failed, likely that user has not previously logged in: ', err);
 			}

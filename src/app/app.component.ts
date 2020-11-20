@@ -13,7 +13,8 @@ export class AppComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
-		private userService: UserService
+		private userService: UserService,
+		private router: Router
 	) { }
 
 	ngOnInit() {
@@ -31,5 +32,13 @@ export class AppComponent implements OnInit {
 		else if (loggedIn === 'true') {
 			this.userService.refresh();
 		}
+
+		setTimeout(() => {
+			const loginCallbackUrl = localStorage.getItem('loginCallbackUrl');
+			if (loginCallbackUrl != null) {
+				localStorage.removeItem('loginCallbackUrl')
+				this.router.navigateByUrl(loginCallbackUrl);
+			}
+		});
 	}
 }

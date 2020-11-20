@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Problem, ProblemService } from 'src/app/services/problem.service';
+import { Problem, Category, ProblemService } from 'src/app/services/problem.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -9,7 +9,11 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ProblemListComponent implements OnInit {
 
-	problems: Problem[];
+	problems: {
+		problem: Problem;
+		categories: Category[];
+	}[] = [];
+
 
 	constructor(
 		public userService: UserService,
@@ -18,7 +22,20 @@ export class ProblemListComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.problemService.getProblems().subscribe(
-			data => this.problems = data,
+			data => {
+				for (const problem of data) {
+					this.problems.push({
+						problem,
+						categories: []
+					});
+					const i = this.problems.length - 1;
+					this.problemService.getCategoriesByProblemId(problem.id).subscribe(
+						categories => {
+							this.problems[i].categories = categories;
+						});
+				}
+
+			},
 			err => console.error(err));
 	}
 }

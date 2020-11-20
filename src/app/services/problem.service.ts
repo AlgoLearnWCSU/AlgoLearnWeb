@@ -33,6 +33,12 @@ export interface Comment {
 	comment: string;
 }
 
+export interface Category {
+	id: number;
+	problem: number;
+	name: string;
+}
+
 @Injectable({
 	providedIn: 'root'
 })
@@ -60,6 +66,10 @@ export class ProblemService {
 
 	getCommentsByProblemId(id: number) {
 		return this.http.get<Comment[]>(`${environment.apiBase}/comment/search?problem=${id}`);
+	}
+
+	getCategoriesByProblemId(id: number) {
+		return this.http.get<Category[]>(`${environment.apiBase}/category/search?problem=${id}`);
 	}
 
 	createProblem(problem: Problem) {

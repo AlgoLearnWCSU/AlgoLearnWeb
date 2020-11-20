@@ -1,22 +1,19 @@
-<div class="row justify-content-end">
-	<button *ngIf="userService.isLoggedIn" class="btn btn-primary float-right" routerLink="/problem/new">Create New
-		Problem</button>
-</div>
+<button *ngIf="userService.isLoggedIn" class="btn btn-primary" routerLink="/problem/new">Create
+	New Problem</button>
 <div class="row">
 	<mat-list *ngIf=" problems !=null">
 		<mat-list-item *ngFor="let problem of problems" class="d-block" style="width: fit-content">
-			<a routerLink="/problem/solve/{{problem.id}}">{{problem.name}}</a>
-			{{": " + problem.description | slice:0:50-problem.name.length}}
-			<span *ngIf="problem.description.length + problem.name.length + 2> 50">...</span>
+			<a routerLink="/problem/solve/{{problem.problem.id}}">{{problem.problem.name}}</a>
+			{{": " + problem.problem.description | slice:0:50-problem.problem.name.length}}
+			<span *ngIf="problem.problem.description.length + problem.problem.name.length + 2> 50">...</span>
 			<mat-chip-list class="pl-2">
-				<!-- <mat-chip *ngFor="let category of problem.categories">{{ category }}</mat-chip> -->
-				<mat-chip>test</mat-chip>
+				<mat-chip *ngFor="let category of problem.categories">{{ category.name }}</mat-chip>
 			</mat-chip-list>
-			<a *ngIf="userService.isLoggedIn && (userService.isAdmin || userService.username === problem.poster)" 
-				class="pl-2" routerLink="/problem/edit/{{problem.id}}">
+			<a *ngIf="userService.isLoggedIn && (userService.isAdmin || userService.username === problem.problem.poster)"
+				class="pl-2" routerLink="/problem/edit/{{problem.problem.id}}">
 				<i class="far fa-edit"></i>
 			</a>
-			<a class="pl-2" routerLink="/problem/discussion/{{problem.id}}">
+			<a class="pl-2" routerLink="/problem/discussion/{{problem.problem.id}}">
 				<i class="far fa-comment-alt"></i>
 			</a>
 		</mat-list-item>

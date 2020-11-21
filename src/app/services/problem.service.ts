@@ -56,9 +56,6 @@ export class ProblemService {
 		return this.http.get<Problem>(`${environment.apiBase}/problem/${id}`);
 	}
 
-	getParamsByProblemId(id: number) {
-		return this.http.get<Parameter[]>(`${environment.apiBase}/parameter/search?problem=${id}`);
-	}
 
 	getTestCasesByProblemId(id: number) {
 		return this.http.get<TestCase[]>(`${environment.apiBase}/testcase/search?problem=${id}`);
@@ -76,8 +73,8 @@ export class ProblemService {
 		return this.http.post<Problem>(`${environment.apiBase}/problem`, problem);
 	}
 
-	createParameter(param: Parameter) {
-		return this.http.post<Parameter>(`${environment.apiBase}/parameter`, param);
+	createCategory(category: Category) {
+		return this.http.post<Category>(`${environment.apiBase}/category`, category);
 	}
 
 	createTestCase(testCase: TestCase) {
@@ -93,8 +90,8 @@ export class ProblemService {
 			problem);
 	}
 
-	editParameter(param: Parameter) {
-		return this.http.put<Parameter>(`${environment.apiBase}/parameter/${param.paramId}`, param);
+	editCategory(category: Category) {
+		return this.http.put<Category>(`${environment.apiBase}/category/${category.id}`, category);
 	}
 
 	editTestCase(testCase: TestCase) {
@@ -110,8 +107,8 @@ export class ProblemService {
 		return this.http.delete(`${environment.apiBase}/problem/${problem.id}`);
 	}
 
-	deleteParameter(param: Parameter) {
-		return this.http.delete(`${environment.apiBase}/parameter/${param.paramId}`);
+	deleteCategory(category: Category) {
+		return this.http.delete(`${environment.apiBase}/category/${category.id}`);
 	}
 
 	deleteTestCase(testCase: TestCase) {

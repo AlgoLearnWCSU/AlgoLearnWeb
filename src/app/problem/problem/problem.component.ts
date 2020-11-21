@@ -1,7 +1,7 @@
 import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Parameter, Problem, ProblemService } from 'src/app/services/problem.service';
+import { Category, Problem, ProblemService } from 'src/app/services/problem.service';
 
 @Component({
 	selector: 'app-problem',
@@ -11,7 +11,7 @@ import { Parameter, Problem, ProblemService } from 'src/app/services/problem.ser
 export class ProblemComponent implements OnInit {
 	problem: Problem;
 	saveId: string;
-	params: Parameter[];
+	categories: Category[];
 
 	constructor(
 		private problemService: ProblemService,
@@ -28,9 +28,9 @@ export class ProblemComponent implements OnInit {
 						this.problem = problem;
 					}
 				);
-				this.problemService.getParamsByProblemId(params.id).subscribe(
-					parameters => {
-						this.params = parameters;
+				this.problemService.getCategoriesByProblemId(params.id).subscribe(
+					categories => {
+						this.categories = categories;
 					}
 				);
 			}

@@ -24,27 +24,27 @@
 			<div class="row">
 				<div class="container-fluid px-0">
 					<div class="row w-75">
-						<div *ngFor="let param of parameters; index as i; trackBy: trackByFn">
+						<div *ngFor="let category of categories; index as i; trackBy: trackByFn">
 							<mat-form-field class="mr-3" appearance="outline" color="primary">
-								<mat-label>Parameter {{i}}</mat-label>
-								<input matInput placeholder="Ex. size" [(ngModel)]="parameters[i].name"
+								<mat-label>Category {{i}}</mat-label>
+								<input matInput placeholder="Ex. size" [(ngModel)]="categories[i].name"
 									[ngModelOptions]="{standalone:true}">
-								<button class="btn p-0 my-auto" mat-button matSuffix mat-icon-button aria-label="Clear"
-									(click)="deleteParam(i)">
+								<button type="button" class="btn p-0 my-auto" mat-button matSuffix mat-icon-button
+									aria-label="Clear" (click)="deletecategory(i)">
 									<i class="far fa-times-circle"></i>
 								</button>
 							</mat-form-field>
 						</div>
 					</div>
-					<button class="btn btn-primary" (click)="addParam()">Add
-						Parameter</button>
+					<button type="button" class="btn btn-primary" (click)="addCategory()">Add
+						Category</button>
 				</div>
 			</div>
 			<div class="row pt-3">
 				<div class="w-100" *ngFor="let testCase of testCases; index as i; trackBy: trackByFn">
 					<div class="pb-2">
 						<h4 class="d-inline w-100">Test Case: {{i}}</h4>
-						<button *ngIf="i > 2" class="btn float-right" mat-button matSuffix mat-icon-button
+						<button type="button" *ngIf="i > 2" class="btn float-right" mat-button matSuffix mat-icon-button
 							aria-label="Clear" (click)="deleteTestCase(i)">
 							<mat-icon style="color: white">close</mat-icon>
 						</button>
@@ -63,12 +63,12 @@
 				</div>
 			</div>
 			<div class="row pb-4">
-				<button class="btn btn-primary" (click)="addTestCase()">Add
+				<button type="button" class="btn btn-primary" (click)="addTestCase()">Add
 					Test Case</button>
 			</div>
 			<div class="divider"></div>
 			<div class="row pt-2">
-				<button class="btn btn-primary">Submit</button>
+				<button type="submit" class="btn btn-primary">Submit</button>
 			</div>
 		</form>
 	</div>

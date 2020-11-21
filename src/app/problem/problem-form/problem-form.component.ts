@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Parameter, Problem, ProblemService, TestCase } from 'src/app/services/problem.service';
+import { Category, Problem, ProblemService, TestCase } from 'src/app/services/problem.service';
 import { UserService } from 'src/app/services/user.service';
 @Component({
 	selector: 'app-problem-form',
@@ -12,7 +12,7 @@ export class ProblemFormComponent implements OnInit {
 
 	id: number;
 	problem: Problem;
-	parameters: Parameter[] = [];
+	categories: Category[] = [];
 	testCases: TestCase[] = [];
 
 	constructor(
@@ -48,9 +48,9 @@ export class ProblemFormComponent implements OnInit {
 					problem => {
 						this.problem = problem;
 					});
-				this.problemService.getParamsByProblemId(this.id).subscribe(
-					params => {
-						this.parameters = params;
+				this.problemService.getCategoriesByProblemId(this.id).subscribe(
+					categories => {
+						this.categories = categories;
 					});
 				this.problemService.getTestCasesByProblemId(this.id).subscribe(
 					testCases => {
@@ -70,10 +70,10 @@ export class ProblemFormComponent implements OnInit {
 					this.problem.poster = this.userService.username;
 					console.log('Trying to create problem: ', this.problem);
 					this.id = (await this.problemService.createProblem(this.problem).toPromise()).id;
-					for (const param of this.parameters) {
-						param.problem = this.id;
-						this.problemService.createParameter(param).subscribe(
-							res => console.log(`Parameter created: ${res}`),
+					for (const categories of this.categories) {
+						categories.problem = this.id;
+						this.problemService.createCategory(categories).subscribe(
+							res => console.log(`category created: ${res}`),
 							err => console.error(err));
 					}
 
@@ -91,10 +91,10 @@ export class ProblemFormComponent implements OnInit {
 					.subscribe(
 						res => console.log(`Problem edited: ${res}`),
 						err => console.error(err));
-				for (const param of this.parameters) {
-					this.problemService.editParameter(param)
+				for (const categories of this.categories) {
+					this.problemService.editCategory(categories)
 						.subscribe(
-							res => console.log(`Param edited: ${res}`),
+							res => console.log(`category edited: ${res}`),
 							err => console.error(err));
 				}
 				for (const testCase of this.testCases) {
@@ -108,16 +108,16 @@ export class ProblemFormComponent implements OnInit {
 		}
 	}
 
-	addParam() {
-		this.parameters.push({
-			paramId: null,
+	addCategory() {
+		this.categories.push({
+			id: null,
 			name: '',
 			problem: null
-		} as Parameter);
+		} as Category);
 	}
 
-	deleteParam(index) {
-		this.parameters.splice(index, 1);
+	deleteCategory(index) {
+		this.categories.splice(index, 1);
 	}
 
 	addTestCase() {

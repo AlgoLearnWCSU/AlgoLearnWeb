@@ -9,7 +9,12 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ProblemListComponent implements OnInit {
 
-	problems: {
+	reviewedProblems: {
+		problem: Problem;
+		categories: Category[];
+	}[] = [];
+
+	notReviewedProblems: {
 		problem: Problem;
 		categories: Category[];
 	}[] = [];
@@ -21,21 +26,45 @@ export class ProblemListComponent implements OnInit {
 	) { }
 
 	ngOnInit(): void {
-		this.problemService.getProblems().subscribe(
+		this.problemService.getReviewedProblems().subscribe(
 			data => {
 				for (const problem of data) {
-					this.problems.push({
+					this.reviewedProblems.push({
 						problem,
 						categories: []
 					});
-					const i = this.problems.length - 1;
+					const i = this.reviewedProblems.length - 1;
 					this.problemService.getCategoriesByProblemId(problem.id).subscribe(
 						categories => {
-							this.problems[i].categories = categories;
+							this.reviewedProblems[i].categories = categories;
 						});
 				}
 
 			},
 			err => console.error(err));
+
+		this.problemService.getNonReviewedProblems().subscribe(
+			data => {
+				for (const problem of data) {
+					this.notReviewedProblems.push({
+						problem,
+						categories: []
+					});
+					const i = this.notReviewedProblems.length - 1;
+					this.problemService.getCategoriesByProblemId(problem.id).subscribe(
+						categories => {
+							this.notReviewedProblems[i].categories = categories;
+						});
+				}
+			},
+			err => console.error(err));
+	}
+
+	deleteProblem(problem: Problem) {
+		this.problemService.deleteProblem(problem).subscribe(res => {
+			console.log('Deleted problem: ', problem);
+		}, err => {
+			console.error(err);
+		});
 	}
 }

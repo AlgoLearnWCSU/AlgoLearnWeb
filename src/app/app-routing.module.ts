@@ -31,6 +31,7 @@ const routes: Routes = [
 		path: 'problem/edit/:id', component: ProblemFormComponent,
 		canActivate: [LoginGuard]
 	},
+	{ path: 'problem/review/:id', component: ProblemFormComponent },
 	{ path: 'learn', component: LearnComponent },
 	{ path: 'learn/bubble-sort', component: BubbleSortComponent },
 	{ path: 'learn/merge-sort', component: MergeSortComponent },

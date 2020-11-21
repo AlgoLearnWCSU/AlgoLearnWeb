@@ -1,8 +1,11 @@
 <button *ngIf="userService.isLoggedIn" class="btn btn-primary" routerLink="/problem/new">Create
 	New Problem</button>
-<div class="row">
-	<mat-list *ngIf=" problems !=null">
-		<mat-list-item *ngFor="let problem of problems" class="d-block" style="width: fit-content">
+<div>
+	<h4 class="mt-3">Problems</h4>
+	<div class="divider"></div>
+	<mat-list *ngIf=" reviewedProblems !=null">
+		<mat-list-item *ngFor="let problem of reviewedProblems; index as idx" class="d-block"
+			style="width: fit-content">
 			<a routerLink="/problem/solve/{{problem.problem.id}}">{{problem.problem.name}}</a>
 			{{": " + problem.problem.description | slice:0:50-problem.problem.name.length}}
 			<span *ngIf="problem.problem.description.length + problem.problem.name.length + 2> 50">...</span>
@@ -12,6 +15,36 @@
 			<a *ngIf="userService.isLoggedIn && (userService.isAdmin || userService.username === problem.problem.poster)"
 				class="pl-2" routerLink="/problem/edit/{{problem.problem.id}}">
 				<i class="far fa-edit"></i>
+			</a>
+			<a *ngIf="userService.isLoggedIn && (userService.isAdmin || userService.username === problem.problem.poster)"
+				class="pl-2" (click)="deleteProblem(problem.problem); reviewedProblems.splice(idx, 1);">
+				<i class="far fa-trash-alt"></i>
+			</a>
+			<a class="pl-2" routerLink="/problem/discussion/{{problem.problem.id}}">
+				<i class="far fa-comment-alt"></i>
+			</a>
+		</mat-list-item>
+	</mat-list>
+</div>
+<div *ngIf="userService.isLoggedIn && userService.isAdmin">
+	<h4 class="mt-3">Problems To Review</h4>
+	<div class="divider"></div>
+	<mat-list *ngIf=" notReviewedProblems !=null">
+		<mat-list-item *ngFor="let problem of notReviewedProblems; index as idx" class="d-block"
+			style="width: fit-content">
+			<a routerLink="/problem/solve/{{problem.problem.id}}">{{problem.problem.name}}</a>
+			{{": " + problem.problem.description | slice:0:50-problem.problem.name.length}}
+			<span *ngIf="problem.problem.description.length + problem.problem.name.length + 2> 50">...</span>
+			<mat-chip-list class="pl-2">
+				<mat-chip *ngFor="let category of problem.categories">{{ category.name }}</mat-chip>
+			</mat-chip-list>
+			<a *ngIf="userService.isLoggedIn && (userService.isAdmin || userService.username === problem.problem.poster)"
+				class="pl-2" routerLink="/problem/edit/{{problem.problem.id}}">
+				<i class="far fa-edit"></i>
+			</a>
+			<a *ngIf="userService.isLoggedIn && (userService.isAdmin || userService.username === problem.problem.poster)"
+				class="pl-2" (click)="deleteProblem(problem.problem); notReviewedProblems.splice(idx, 1);">
+				<i class="far fa-trash-alt"></i>
 			</a>
 			<a class="pl-2" routerLink="/problem/discussion/{{problem.problem.id}}">
 				<i class="far fa-comment-alt"></i>

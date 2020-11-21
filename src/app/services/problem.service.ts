@@ -52,6 +52,14 @@ export class ProblemService {
 		return this.http.get<Problem[]>(`${environment.apiBase}/problem`);
 	}
 
+	getReviewedProblems() {
+		return this.http.get<Problem[]>(`${environment.apiBase}/problem/search?reviewed=true`);
+	}
+
+	getNonReviewedProblems() {
+		return this.http.get<Problem[]>(`${environment.apiBase}/problem/search?reviewed=false`);
+	}
+
 	getProblemById(id: number) {
 		return this.http.get<Problem>(`${environment.apiBase}/problem/${id}`);
 	}

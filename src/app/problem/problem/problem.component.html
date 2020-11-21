@@ -3,13 +3,13 @@
 	<div class="divider"></div>
 	<p>{{ problem.description }}</p>
 </div>
-<div *ngIf="params != null && params.length > 0">
-	<h5>Parameters</h5>
+<div *ngIf="categories != null && categories.length > 0">
+	<h5>Categories</h5>
 	<div class="divider"></div>
 	<div class="row">
-		<div *ngFor="let param of params;index as idx">
-			<p *ngIf="idx === 0">{{param.name}}</p>
-			<p *ngIf="idx !== 0">, {{param.name}}</p>
+		<div *ngFor="let category of categories;index as idx">
+			<p *ngIf="idx === 0">{{category.name}}</p>
+			<p *ngIf="idx !== 0">, {{category.name}}</p>
 		</div>
 	</div>
 </div>

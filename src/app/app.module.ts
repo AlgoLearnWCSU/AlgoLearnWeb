@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,6 +32,7 @@ import { SelectionSortComponent } from './learn/selection-sort/selection-sort.co
 import { CodeEditorComponent } from './code-editor/code-editor.component';
 import { ProblemDiscussionComponent } from './problem/problem-discussion/problem-discussion.component';
 import { ProblemDiscussionPageComponent } from './problem/problem-discussion-page/problem-discussion-page.component';
+import { Interceptor } from './interceptors/interceptor';
 
 @NgModule({
 	declarations: [
@@ -68,7 +69,9 @@ import { ProblemDiscussionPageComponent } from './problem/problem-discussion-pag
 		MatCardModule,
 		MatPaginatorModule
 	],
-	providers: [],
+	providers: [
+		{ provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },
+	],
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

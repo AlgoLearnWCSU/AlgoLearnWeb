@@ -1,1 +1,36 @@
-<p>selection-sort works!</p>
+<h4 class="pt-2">Example</h4>
+<div class="divider"></div>
+<div>
+	<div class="row justify-content-center">
+		<p class="pr-2 my-auto">Array: </p>
+		<div *ngFor="let num of arr; index as idx" class="array-box px-2">
+			<p class="my-auto" *ngIf="idx == j || idx == j + 1" style="font-weight: 900;"><u>{{num}}</u></p>
+			<p class="my-auto" *ngIf="!(idx == j || idx == j + 1)">{{num}}</p>
+		</div>
+	</div>
+	<p class="pt-3">Comparing: {{arr[j]}}, {{arr[j + 1]}}</p>
+	<div class="btn-group">
+		<button class="btn btn-primary" (click)="selectionSort()">Sort</button>
+
+		<button class="btn btn-danger" (click)="randomize()">Reset</button>
+	</div>
+</div>
+
+<h4 class="pt-3">Psuedocode</h4>
+<div class="divider"></div>
+<div class="mx-auto w-75">
+	<app-code-editor [id]="0" [lang]="null" [minLines]="0" [disabled]="true" [code]="selectionSortPsuedocode">
+	</app-code-editor>
+</div>
+<h4 class="pt-3">JavaScript Implementation</h4>
+<div class="divider"></div>
+<div class="mx-auto w-75">
+	<app-code-editor [id]="1" [minLines]="0" [disabled]="true" [code]="selectionSortJSCode"></app-code-editor>
+</div>
+
+<h4 class="pt-3">Efficiency</h4>
+<div class="divider"></div>
+<div>
+	<p>Runtime: O(n<sup>2</sup>)</p>
+	<p>Space: O(1)</p>
+</div>

@@ -1,1 +1,40 @@
-<p>merge-sort works!</p>
+<h4 class="pt-2">Example</h4>
+<div class="divider"></div>
+<div>
+	<div class="row justify-content-center">
+		<p class="pr-2 my-auto">Array: </p>
+		<div *ngFor="let num of arr; index as idx" class="array-box px-2">
+			<p class="my-auto" *ngIf="(comp1 != null && comp2 != null && (idx == comp1 || idx == comp2)) || 
+			((split != null) && idx == split) || ((merge1 != null && merge2 != null) &&(idx == merge1 || idx == merge2)); else notBold" style="font-weight: 900;"><u>{{num}}</u></p>
+			<ng-template #notBold><p>{{num}}</p></ng-template>			
+		</div>
+	</div>
+	<p class="my-auto" *ngIf="split != null" class="pt-3">Splitting at: {{arr[split]}}</p>
+	<p class="my-auto" *ngIf="merge1 != null && merge2 != null" class="pt-3">Merging from: {{arr[merge1]}} to {{arr[merge2]}}</p>
+	<p class="my-auto" *ngIf="comp1 != null && comp2 != null" class="pt-3">Comparing: {{arr[comp1]}}, {{arr[comp2]}}</p>
+	<div class="btn-group">
+		<button class="btn btn-primary" (click)="mergeSort()">Sort</button>
+		<button class="btn btn-secondary" (click)="nextStep()">Next Step</button>
+		<button class="btn btn-danger" (click)="randomize()">Reset</button>
+	</div>
+</div>
+
+<h4 class="pt-3">Psuedocode</h4>
+<div class="divider"></div>
+<div class="mx-auto w-75">
+	<app-code-editor [id]="0" [lang]="null" [minLines]="0" [disabled]="true" [code]="mergeSortPseudoCode">
+	</app-code-editor>
+</div>
+
+<h4 class="pt-3">JavaScript Implementation</h4>
+<div class="divider"></div>
+<div class="mx-auto w-75">
+	<app-code-editor [id]="1" [minLines]="0" [disabled]="true" [code]="mergeSortJSCode"></app-code-editor>
+</div>
+
+<h4 class="pt-3">Efficiency</h4>
+<div class="divider"></div>
+<div>
+	<p>Runtime: O(nlogn)</p>
+	<p>Space: O(1)</p>
+</div>

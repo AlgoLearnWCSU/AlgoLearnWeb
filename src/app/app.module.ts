@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
@@ -35,6 +35,7 @@ import { ProblemDiscussionPageComponent } from './problem/problem-discussion-pag
 import { Interceptor } from './interceptors/interceptor';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { NotificationComponent } from './notifications/notification/notification.component';
+import { GlobalErrorHandler } from './error-handlers/global-error-handler';
 
 @NgModule({
 	declarations: [
@@ -75,6 +76,7 @@ import { NotificationComponent } from './notifications/notification/notification
 	],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },
+		{ provide: ErrorHandler, useClass: GlobalErrorHandler },
 	],
 	bootstrap: [AppComponent]
 })

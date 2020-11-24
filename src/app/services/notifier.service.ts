@@ -11,19 +11,15 @@ export interface Notification {
 })
 export class NotifierService {
 
-	private _notifications: Notification[] = [];
+	notifications: Notification[] = [];
 
 	constructor() { }
 
-	get notifications() {
-		return this._notifications;
-	}
-
 	addNotification(notification: Notification) {
-		this._notifications.push(notification);
+		this.notifications.push(notification);
 	}
 
 	deleteNotification(idx: number) {
-		this._notifications.splice(idx, 1);
+		this.notifications.splice(idx, 1);
 	}
 }

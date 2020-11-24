@@ -1,0 +1,9 @@
+<div class="alert {{notification.warning ? 'alert-danger' : 'alert-success'}}" role="alert">
+	<div class="row">
+		<h5 class="my-auto pr-2">{{notification.title}}: </h5>
+		<p class="my-auto pr-4">{{notification.message}}</p>
+		<button class="my-auto" type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<a class="alert-link" (click)="remove()"><i class="fas fa-times" aria-hidden="true">times</i></a>
+		</button>
+	</div>
+</div>

@@ -33,6 +33,8 @@ import { CodeEditorComponent } from './code-editor/code-editor.component';
 import { ProblemDiscussionComponent } from './problem/problem-discussion/problem-discussion.component';
 import { ProblemDiscussionPageComponent } from './problem/problem-discussion-page/problem-discussion-page.component';
 import { Interceptor } from './interceptors/interceptor';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { NotificationComponent } from './notifications/notification/notification.component';
 
 @NgModule({
 	declarations: [
@@ -51,7 +53,9 @@ import { Interceptor } from './interceptors/interceptor';
 		SelectionSortComponent,
 		CodeEditorComponent,
 		ProblemDiscussionComponent,
-		ProblemDiscussionPageComponent
+		ProblemDiscussionPageComponent,
+		NotificationsComponent,
+		NotificationComponent
 	],
 	imports: [
 		BrowserModule,

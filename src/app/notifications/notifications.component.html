@@ -1,5 +1,5 @@
 <div *ngIf="notifierService.notifications.length > 0" class="mt-5"
-	style="z-index: 100; position: fixed; left: 50%; transform: translate(-50%, 0);">
+	style="z-index: 100; position: fixed; left: 50%; transform: translate(-50%, 0); width: 37.5%;">
 	<app-notification *ngFor="let notification of notifierService.notifications; index as idx"
 		[notification]="notification" [index]="idx">
 	</app-notification>

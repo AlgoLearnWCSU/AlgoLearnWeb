@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginGuard } from './guards/login-guard.guard';
+import { LoginGuard } from './guards/login.guard';
 import { HomeComponent } from './home/home.component';
 import { BubbleSortComponent } from './learn/bubble-sort/bubble-sort.component';
 import { InsertionSortComponent } from './learn/insertion-sort/insertion-sort.component';

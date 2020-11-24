@@ -1,6 +1,9 @@
+import { ThrowStmt } from '@angular/compiler';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoggerService } from 'src/app/services/logger.service';
+import { NotifierService } from 'src/app/services/notifier.service';
 import { Category, Problem, ProblemService, TestCase } from 'src/app/services/problem.service';
 import { UserService } from 'src/app/services/user.service';
 @Component({
@@ -14,12 +17,16 @@ export class ProblemFormComponent implements OnInit {
 	problem: Problem;
 	categories: Category[] = [];
 	testCases: TestCase[] = [];
+	mode: string = 'Create';
+	loadingSubmit = false;
 
 	constructor(
 		private router: Router,
 		private route: ActivatedRoute,
 		private problemService: ProblemService,
-		private userService: UserService
+		private userService: UserService,
+		private notifierService: NotifierService,
+		private loggerService: LoggerService
 	) { }
 
 	ngOnInit(): void {
@@ -31,17 +38,13 @@ export class ProblemFormComponent implements OnInit {
 			reviewed: false
 		} as Problem;
 
-		for (let i = 0; i < 3; ++i) {
-			this.testCases.push({
-				id: null,
-				problem: null,
-				public: true,
-				sampleInput: '',
-				sampleOutput: ''
-			} as TestCase);
-		}
-
 		if (this.router.url.indexOf('edit') !== -1) {
+			this.mode = 'Edit';
+
+		} else if (this.router.url.indexOf('review') !== -1) {
+			this.mode = 'Review';
+		}
+		if (this.mode != 'Create') {
 			this.route.params.subscribe(params => {
 				this.id = params.id;
 				this.problemService.getProblemById(this.id).subscribe(
@@ -55,56 +58,118 @@ export class ProblemFormComponent implements OnInit {
 				this.problemService.getTestCasesByProblemId(this.id).subscribe(
 					testCases => {
 						this.testCases = testCases;
-						console.log(testCases);
 					}
 				);
 			});
+		} else {
+			for (let i = 0; i < 3; ++i) {
+				this.testCases.push({
+					id: null,
+					problem: null,
+					public: true,
+					sampleInput: '',
+					sampleOutput: ''
+				} as TestCase);
+			}
 		}
 	}
 
-	async submitProblem(form: NgForm) {
+	handleError(err) {
+		this.loadingSubmit = false;
+		this.notifierService.addNotification({
+			warning: true,
+			title: 'Error Creating Problem',
+			message: err && err.message ? err.message : err.toString()
+		});
+		this.loggerService.log('Error:\n```' + (err && err.message ? err.message : err.toString())
+			+ '```' + (err.stack ? 'Stack:```' + err.stack + '```' : ''));
+	}
 
+	handleSuccess() {
+		this.loadingSubmit = false;
+		this.notifierService.addNotification({
+			warning: false,
+			title: 'Success',
+			message: `Problem ${this.mode == 'Create' ? 'creat' : this.mode.toLowerCase()}ed`
+		});
+		this.router.navigate(['problem']);
+	}
+
+	async submitProblem(form: NgForm) {
 		if (form.form.status === 'VALID') {
-			if (this.id == null) {
+			this.loadingSubmit = true;
+			if (this.mode == 'Create') {
 				try {
 					this.problem.poster = this.userService.username;
-					console.log('Trying to create problem: ', this.problem);
 					this.id = (await this.problemService.createProblem(this.problem).toPromise()).id;
+
+					const promsiseArray = [];
+
 					for (const categories of this.categories) {
 						categories.problem = this.id;
-						this.problemService.createCategory(categories).subscribe(
-							res => console.log(`category created: ${res}`),
-							err => console.error(err));
+						promsiseArray.push(this.problemService.createCategory(categories).toPromise());
 					}
 
 					for (const testCase of this.testCases) {
 						testCase.problem = this.id;
-						this.problemService.createTestCase(testCase).subscribe(
-							res => console.log(`Test Case created: ${res}`),
-							err => console.error(err));
+						promsiseArray.push(this.problemService.createTestCase(testCase).toPromise());
 					}
+
+					await Promise.all(promsiseArray);
+					this.handleSuccess();
 				} catch (err) {
-					console.error(err);
+					this.handleError(err);
 				}
-			} else {
-				this.problemService.editProblem(this.problem)
-					.subscribe(
-						res => console.log(`Problem edited: ${res}`),
-						err => console.error(err));
-				for (const categories of this.categories) {
-					this.problemService.editCategory(categories)
-						.subscribe(
-							res => console.log(`category edited: ${res}`),
-							err => console.error(err));
+			} else if (this.mode == 'Edit') {
+				try {
+					const promsiseArray = [];
+					promsiseArray.push(this.problemService.editProblem(this.problem).toPromise());
+					for (const category of this.categories) {
+						category.problem = this.id
+						if (category.id != null)
+							promsiseArray.push(this.problemService.editCategory(category).toPromise());
+						else
+							promsiseArray.push(this.problemService.createCategory(category).toPromise());
+					}
+					for (const testCase of this.testCases) {
+						testCase.problem = this.id
+						if (testCase.id != null)
+							promsiseArray.push(this.problemService.editTestCase(testCase).toPromise());
+						else
+							promsiseArray.push(this.problemService.createTestCase(testCase).toPromise());
+					}
+
+					await Promise.all(promsiseArray);
+					this.handleSuccess();
+				} catch (err) {
+					this.handleError(err);
 				}
-				for (const testCase of this.testCases) {
-					this.problemService.editTestCase(testCase)
-						.subscribe(
-							res => console.log(`Test Case edited: ${res}`),
-							err => console.error(err));
+			} else if (this.mode == 'Review') {
+				try {
+					const promsiseArray = [];
+					this.problem.reviewed = true;
+					promsiseArray.push(this.problemService.editProblem(this.problem).toPromise());
+					for (const category of this.categories) {
+						category.problem = this.id
+						if (category.id != null)
+							promsiseArray.push(this.problemService.editCategory(category).toPromise());
+						else
+							promsiseArray.push(this.problemService.createCategory(category).toPromise());
+					}
+					for (const testCase of this.testCases) {
+						testCase.problem = this.id
+						if (testCase.id != null)
+							promsiseArray.push(this.problemService.editTestCase(testCase).toPromise());
+						else
+							promsiseArray.push(this.problemService.createTestCase(testCase).toPromise());
+					}
+
+					await Promise.all(promsiseArray);
+					this.handleSuccess();
+				} catch (err) {
+					this.handleError(err);
 				}
 			}
-
 		}
 	}
 
@@ -117,6 +182,15 @@ export class ProblemFormComponent implements OnInit {
 	}
 
 	deleteCategory(index) {
+		if (this.mode != 'Create' && this.categories[index].id != null) {
+			this.problemService.deleteCategory(this.categories[index]).toPromise().catch(
+				() => this.notifierService.addNotification({
+					warning: true,
+					title: 'Error',
+					message: 'Issue deleting category'
+				})
+			);
+		}
 		this.categories.splice(index, 1);
 	}
 
@@ -131,6 +205,14 @@ export class ProblemFormComponent implements OnInit {
 	}
 
 	deleteTestCase(index) {
+		if (this.mode != 'Create' && this.testCases[index].id != null) {
+			this.problemService.deleteTestCase(this.testCases[index]).toPromise().catch(
+				() => this.notifierService.addNotification({
+					warning: true,
+					title: 'Error',
+					message: 'Issue deleting test case'
+				}));
+		}
 		this.testCases.splice(index, 1);
 	}
 

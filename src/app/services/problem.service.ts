@@ -94,20 +94,20 @@ export class ProblemService {
 	}
 
 	editProblem(problem: Problem) {
-		return this.http.put<Problem>(`${environment.apiBase}/problem/${problem.id}`,
+		return this.http.patch<Problem>(`${environment.apiBase}/problem/${problem.id}`,
 			problem);
 	}
 
 	editCategory(category: Category) {
-		return this.http.put<Category>(`${environment.apiBase}/category/${category.id}`, category);
+		return this.http.patch<Category>(`${environment.apiBase}/category/${category.id}`, category);
 	}
 
 	editTestCase(testCase: TestCase) {
-		return this.http.put<TestCase>(`${environment.apiBase}/testcase/${testCase.id}`, testCase);
+		return this.http.patch<TestCase>(`${environment.apiBase}/testcase/${testCase.id}`, testCase);
 	}
 
 	editComment(comment: Comment) {
-		return this.http.put<Comment>(`${environment.apiBase}/comment/${comment.id}`,
+		return this.http.patch<Comment>(`${environment.apiBase}/comment/${comment.id}`,
 			comment);
 	}
 

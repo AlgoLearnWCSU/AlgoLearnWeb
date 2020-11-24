@@ -9,8 +9,8 @@ export class GlobalErrorHandler implements ErrorHandler {
 		private notifierService: NotifierService
 	) { }
 
-	handleError(error) {
-		if (!error || error.alreadyThrown)
+	handleError(err) {
+		if (!err || err.alreadyThrown)
 			return;
 		this.notifierService.addNotification({
 			warning: true,
@@ -19,9 +19,10 @@ export class GlobalErrorHandler implements ErrorHandler {
 				'as been sent to the developement team to resolve the issue.' +
 				' If the page is unresponsive, you can refresh the page to try again.'
 		});
-		this.loggerService.log('Error:\n```' + error.toString() + '```Stack:```' + error.stack + '```');
-		error.alreadyThrown = true;
-		throw error;
+		this.loggerService.log('Error:\n```' + (err && err.message ? err.message : err.toString())
+			+ '```' + (err.stack ? 'Stack:```' + err.stack + '```' : ''));
+		err.alreadyThrown = true;
+		throw err;
 	}
 
 }

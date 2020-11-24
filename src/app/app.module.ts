@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -72,7 +73,8 @@ import { GlobalErrorHandler } from './error-handlers/global-error-handler';
 		MatIconModule,
 		MatExpansionModule,
 		MatCardModule,
-		MatPaginatorModule
+		MatPaginatorModule,
+		MatProgressBarModule
 	],
 	providers: [
 		{ provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true },

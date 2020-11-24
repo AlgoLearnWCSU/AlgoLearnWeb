@@ -1,6 +1,6 @@
 <div>
 	<div class="pt-2 mr-5">
-		<h2>{{ id == null ? "Create A Problem" : "Edit A Problem"}}</h2>
+		<h2>{{ mode }} a Problem</h2>
 	</div>
 	<div class="divider"></div>
 	<div class="pb-3">
@@ -46,7 +46,7 @@
 						<h4 class="d-inline w-100">Test Case: {{i}}</h4>
 						<button type="button" *ngIf="i > 2" class="btn float-right" mat-button matSuffix mat-icon-button
 							aria-label="Clear" (click)="deleteTestCase(i)">
-							<mat-icon style="color: white">close</mat-icon>
+							<i class="fas fa-times"></i>
 						</button>
 					</div>
 					<div class="divider"></div>
@@ -67,8 +67,10 @@
 					Test Case</button>
 			</div>
 			<div class="divider"></div>
-			<div class="row pt-2">
-				<button type="submit" class="btn btn-primary">Submit</button>
+			<div class="row pt-2 w-100">
+				<button type="submit" class="btn btn-primary mr-5">Submit</button>
+				<mat-progress-bar *ngIf="loadingSubmit" class="rounded w-75 my-auto" mode="indeterminate">
+				</mat-progress-bar>
 			</div>
 		</form>
 	</div>

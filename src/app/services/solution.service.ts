@@ -38,4 +38,8 @@ export class SolutionService {
 	getResultsBySolutionId(id: number) {
 		return this.http.get<{ submissions: Result[] }>(`${environment.apiBase}/solution/result/${id}`);
 	}
+
+	getSolutionsByProblemId(problem: number) {
+		return this.http.get<Solution[]>(`${environment.apiBase}/solution/search?problem=${problem}`);
+	}
 }

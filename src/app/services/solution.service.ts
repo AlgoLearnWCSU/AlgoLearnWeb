@@ -3,7 +3,14 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 export interface Solution {
-
+	id: number;
+	solver: string;
+	problem: number;
+	code: string;
+	languageId: number;
+	tokens: string;
+	passedTests: number;
+	avgCompTime: number;
 }
 
 export interface Result {

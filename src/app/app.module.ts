@@ -37,6 +37,8 @@ import { Interceptor } from './interceptors/interceptor';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { NotificationComponent } from './notifications/notification/notification.component';
 import { GlobalErrorHandler } from './error-handlers/global-error-handler';
+import { ProblemLeaderboardComponent } from './problem/problem-leaderboard/problem-leaderboard.component';
+import { ProblemLeaderboardPageComponent } from './problem/problem-leaderboard-page/problem-leaderboard-page.component';
 
 @NgModule({
 	declarations: [
@@ -57,7 +59,9 @@ import { GlobalErrorHandler } from './error-handlers/global-error-handler';
 		ProblemDiscussionComponent,
 		ProblemDiscussionPageComponent,
 		NotificationsComponent,
-		NotificationComponent
+		NotificationComponent,
+		ProblemLeaderboardComponent,
+		ProblemLeaderboardPageComponent
 	],
 	imports: [
 		BrowserModule,

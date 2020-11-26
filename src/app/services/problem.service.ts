@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Solution } from 'src/app/services/solution.service'
 
 export interface Problem {
 	id: number;
@@ -75,6 +76,10 @@ export class ProblemService {
 
 	getCategoriesByProblemId(id: number) {
 		return this.http.get<Category[]>(`${environment.apiBase}/category/search?problem=${id}`);
+	}
+
+	getSolutionsByProblemId(id: number) {
+		return this.http.get<Solution[]>(`${environment.apiBase}/solution/search?problem=${id}`);
 	}
 
 	createProblem(problem: Problem) {

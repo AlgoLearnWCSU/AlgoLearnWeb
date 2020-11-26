@@ -1,5 +1,4 @@
 import { HttpClient } from '@angular/common/http';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 
@@ -23,10 +22,4 @@ export class LoggerService {
 		});
 	}
 
-	logContactUs(message: string) {
-		return this.http.post('https://discord.com/api/webhooks/781327691763679273/DqnDI5K2vvoSS9MZ0SW33ZV7ip1bjBCazfHcu2DrlfavCK3H-Mep1jZClm22UKoCnYWW', {
-			content: message,
-			username: this.userService.username
-		});
-	}
 }

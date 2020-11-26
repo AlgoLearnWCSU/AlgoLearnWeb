@@ -81,8 +81,8 @@ export class ProblemFormComponent implements OnInit {
 			title: 'Error Creating Problem',
 			message: err && err.message ? err.message : err.toString()
 		});
-		this.loggerService.log('Error:\n```' + (err && err.message ? err.message : err.toString())
-			+ '```' + (err.stack ? 'Stack:```' + err.stack + '```' : ''));
+		this.loggerService.logError('Error:\n```' + (err && err.message ? err.message : err.toString())
+			+ '```' + (err.stack ? 'Stack:```' + err.stack + '```' : '')).toPromise();
 	}
 
 	handleSuccess() {

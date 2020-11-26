@@ -19,10 +19,14 @@ export class GlobalErrorHandler implements ErrorHandler {
 				'as been sent to the developement team to resolve the issue.' +
 				' If the page is unresponsive, you can refresh the page to try again.'
 		});
-		this.loggerService.log('Error:\n```' + (err && err.message ? err.message : err.toString())
-			+ '```' + (err.stack ? 'Stack:```' + err.stack + '```' : ''));
-		err.alreadyThrown = true;
-		throw err;
+		this.loggerService.logError('Error:\n```' + (err && err.message ? err.message : err.toString())
+			+ '```' + (err.stack ? 'Stack:```' + err.stack + '```' : '')).subscribe(() => {
+				err.alreadyThrown = true;
+				throw err;
+			}, err => {
+				console.error('Couldn\'t log error');
+			});
+
 	}
 
 }

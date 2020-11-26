@@ -56,7 +56,7 @@ export class CodeEditorComponent implements AfterViewInit, OnDestroy, OnChanges 
 				// Load saved code if it exists
 				const oldCode = localStorage.getItem(this.saveId);
 				if (oldCode != null) {
-					this.codeEditor.setValue(oldCode);
+					this.code = oldCode;
 				}
 
 				// Save new code whenever use inputs it

@@ -48,6 +48,8 @@
 		<p>Actual Output:</p>
 		<p *ngFor="let line of results[idx].stderr.split('\n'); index as idx">{{line}}</p>
 	</ng-template>
+
+	<p *ngIf="results != null && results[idx] != null && results[idx].time != null">Time: {{results[idx].time}}</p>
 </div>
 
 <h2>Discussion</h2>

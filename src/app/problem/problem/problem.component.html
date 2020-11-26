@@ -3,18 +3,55 @@
 	<div class="divider"></div>
 	<p>{{ problem.description }}</p>
 </div>
+
 <div *ngIf="categories != null && categories.length > 0">
 	<h5>Categories</h5>
 	<div class="divider"></div>
 	<div class="row">
 		<div *ngFor="let category of categories;index as idx">
-			<p *ngIf="idx === 0">{{category.name}}</p>
-			<p *ngIf="idx !== 0">, {{category.name}}</p>
+			<p>
+				<ng-template [ngIf]="idx !== 0">, </ng-template>{{category.name}}
+			</p>
 		</div>
 	</div>
 </div>
-<app-code-editor id="0" [saveId]="saveId"></app-code-editor>
 
-<h2 class="pt-3">Discussion</h2>
+<app-code-editor class="mb-5" id="0" [saveId]="id"></app-code-editor>
+<div *ngIf="userService.isLoggedIn" class="pt-3">
+	<div class="w-100">
+		<button type="button" class="btn btn-primary float-right" (click)="runCode()">Submit</button>
+	</div>
+	<mat-progress-bar *ngIf="loadingSubmit" class="rounded w-75 mt-2" mode="indeterminate">
+	</mat-progress-bar>
+</div>
+
+<h4 class="mt-5">Test Cases:</h4>
+<p *ngIf="results != null && testCases != null && solution.passedTests != null" class="float-right">
+	{{solution.passedTests}}/{{testCases.length}} passed</p>
 <div class="divider"></div>
-<app-problem-discussion [id]="saveId"></app-problem-discussion>
+<div class="p-3 rounded" *ngFor="let testCase of testCases; index as idx">
+	<p>Test Case {{idx}}:</p>
+	<mat-progress-bar *ngIf="loadingResults" class="rounded w-75 mt-2" mode="indeterminate">
+	</mat-progress-bar>
+	<p>Input:</p>
+	<p *ngFor="let line of testCase.sampleInput.split('\n'); index as idx">{{line}}</p>
+
+	<ng-template [ngIf]="results != null && results[idx] != null && results[idx].stdout != null">
+		<p>Actual Output:</p>
+		<p *ngFor="let line of results[idx].stdout.split('\n'); index as idx">{{line}}</p>
+	</ng-template>
+
+	<p>Expected Output:</p>
+	<p *ngFor="let line of testCase.sampleOutput.split('\n'); index as idx">{{line}}</p>
+
+	<ng-template [ngIf]="results != null && results[idx] != null && results[idx].stderr != null">
+		<p>Actual Output:</p>
+		<p *ngFor="let line of results[idx].stderr.split('\n'); index as idx">{{line}}</p>
+	</ng-template>
+
+	<p *ngIf="results != null && results[idx] != null && results[idx].time != null">Time: {{results[idx].time}}</p>
+</div>
+
+<h2>Discussion</h2>
+<div class="divider"></div>
+<app-problem-discussion [id]="id"></app-problem-discussion>

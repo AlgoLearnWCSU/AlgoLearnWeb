@@ -112,6 +112,9 @@ export class ProblemFormComponent implements OnInit {
 
 					for (const testCase of this.testCases) {
 						testCase.problem = this.id;
+						if (!testCase.sampleOutput.endsWith('\n')) {
+							testCase.sampleOutput += '\n';
+						}
 						promsiseArray.push(this.problemService.createTestCase(testCase).toPromise());
 					}
 
@@ -133,6 +136,9 @@ export class ProblemFormComponent implements OnInit {
 					}
 					for (const testCase of this.testCases) {
 						testCase.problem = this.id
+						if (!testCase.sampleOutput.endsWith('\n')) {
+							testCase.sampleOutput += '\n';
+						}
 						if (testCase.id != null)
 							promsiseArray.push(this.problemService.editTestCase(testCase).toPromise());
 						else
@@ -158,6 +164,9 @@ export class ProblemFormComponent implements OnInit {
 					}
 					for (const testCase of this.testCases) {
 						testCase.problem = this.id
+						if (!testCase.sampleOutput.endsWith('\n')) {
+							testCase.sampleOutput += '\n';
+						}
 						if (testCase.id != null)
 							promsiseArray.push(this.problemService.editTestCase(testCase).toPromise());
 						else

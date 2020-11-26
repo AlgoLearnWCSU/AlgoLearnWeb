@@ -9,8 +9,8 @@ export interface Solution {
 	code: string;
 	languageId: number;
 	tokens: string;
-	passedTests: number;
-	avgCompTime: number;
+	passedTests?: number;
+	avgCompTime?: number;
 }
 
 export interface Result {
@@ -29,7 +29,6 @@ export interface Result {
 	providedIn: 'root'
 })
 export class SolutionService {
-
 	constructor(
 		private http: HttpClient
 	) { }
@@ -48,5 +47,13 @@ export class SolutionService {
 
 	getSolutionsByProblemId(problem: number) {
 		return this.http.get<Solution[]>(`${environment.apiBase}/solution/search?problem=${problem}`);
+	}
+
+	createSolution(solution: Solution) {
+		return this.http.post<Solution>(`${environment.apiBase}/solution`, solution);
+	}
+
+	editSolution(solution: Solution) {
+		return this.http.patch<Solution>(`${environment.apiBase}/solution/${solution.id}`, solution);
 	}
 }

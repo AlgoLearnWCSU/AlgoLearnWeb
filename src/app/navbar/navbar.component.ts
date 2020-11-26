@@ -12,7 +12,7 @@ export class NavbarComponent implements OnInit {
 		{ title: 'Home', path: '/home' },
 		{ title: 'Learn', path: '/learn' },
 		{ title: 'Practice', path: '/problem' },
-		{ title: 'Page 4', path: '/page4' },
+		{ title: 'Contact', path: '/contact' },
 	];
 
 	constructor(public location: Location) {

@@ -1,0 +1,16 @@
+<h1>Contact Us</h1>
+<form (ngSubmit)="logContactUs()">
+	<div class="row">
+		<mat-form-field class="w-100" appearance="outline" color="primary">
+			<mat-label>Report issues or leave us a note!</mat-label>
+			<textarea rows="5" matInput [(ngModel)]="message" name="message"></textarea>
+		</mat-form-field>
+	</div>
+	<div class="row pt-2">
+		<button type="submit" class="btn btn-primary">
+			<i class="far fa-paper-plane"></i>
+		</button>
+		<mat-progress-bar *ngIf="loadingSubmit" class="rounded w-75 my-auto" mode="indeterminate">
+		</mat-progress-bar>
+	</div>
+</form>

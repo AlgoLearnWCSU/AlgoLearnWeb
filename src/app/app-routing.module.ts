@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { ContactComponent } from './contact/contact.component';
 import { LoginGuard } from './guards/login.guard';
 import { HomeComponent } from './home/home.component';
 import { BubbleSortComponent } from './learn/bubble-sort/bubble-sort.component';
@@ -40,6 +41,7 @@ const routes: Routes = [
 	{ path: 'learn/insertion-sort', component: InsertionSortComponent },
 	{ path: 'learn/quick-sort', component: QuickSortComponent },
 	{ path: 'learn/selection-sort', component: SelectionSortComponent },
+	{ path: 'contact', component: ContactComponent },
 	{ path: '**', component: NotFoundComponent }
 ];
 

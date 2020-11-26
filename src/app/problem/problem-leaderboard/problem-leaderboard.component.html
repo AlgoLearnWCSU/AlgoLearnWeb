@@ -1,0 +1,25 @@
+<mat-paginator *ngIf="solutions != null" class="mb-3 mb-2 rounded" [length]="solutions.length"
+	[pageIndex]="pageState.pageIndex" [pageSize]="pageState.pageSize" [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>
+<div *ngIf="solutions">
+	<div *ngFor="let solution of solutions |
+		slice:pageState.pageIndex * pageState.pageSize:
+		pageState.pageIndex * pageState.pageSize+pageState.pageSize;
+		index as idx">
+		<mat-card class="mb-3">
+			<mat-card-header class="ml-0">
+				<div mat-card-avatar>
+					<img class="rounded-circle" width="35px" height="35px" [src]="usernameToAvatarMap[solution.solver]">
+				</div>
+				<mat-card-title>{{solution.solver}}</mat-card-title>
+			</mat-card-header>
+			<mat-card-content class="mb-0">
+				<p class="my-0">Passed tests: {{solution.passedTests}}</p>
+				<p class="my-0">Computation time: {{solution.avgCompTime}} </p>
+			</mat-card-content>
+			<mat-card-footer class="mx-0">
+				<p>Code: </p>
+				<p class="code">{{solution.code}}</p>
+			</mat-card-footer>
+		</mat-card>
+	</div>

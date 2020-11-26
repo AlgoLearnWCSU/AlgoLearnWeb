@@ -11,6 +11,7 @@ import { SelectionSortComponent } from './learn/selection-sort/selection-sort.co
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ProblemDiscussionPageComponent } from './problem/problem-discussion-page/problem-discussion-page.component';
 import { ProblemFormComponent } from './problem/problem-form/problem-form.component';
+import { ProblemLeaderboardPageComponent } from './problem/problem-leaderboard-page/problem-leaderboard-page.component';
 import { ProblemListComponent } from './problem/problem-list/problem-list.component';
 import { ProblemComponent } from './problem/problem/problem.component';
 
@@ -32,6 +33,7 @@ const routes: Routes = [
 		canActivate: [LoginGuard]
 	},
 	{ path: 'problem/review/:id', component: ProblemFormComponent },
+	{ path: 'problem/leaderboard/:id', component: ProblemLeaderboardPageComponent },
 	{ path: 'learn', component: LearnComponent },
 	{ path: 'learn/bubble-sort', component: BubbleSortComponent },
 	{ path: 'learn/merge-sort', component: MergeSortComponent },

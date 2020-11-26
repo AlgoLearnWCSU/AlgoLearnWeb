@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LoggerService } from '../services/logger.service'
 import { NotifierService } from 'src/app/services/notifier.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgForm } from '@angular/forms'
 
 @Component({
 	selector: 'app-contact',
@@ -40,13 +41,5 @@ export class ContactComponent implements OnInit {
 			});
 		});
 		this.router.navigate(['home']);
-	}
-
-	handleError(err) {
-
-	}
-
-	handleSuccess() {
-
 	}
 }

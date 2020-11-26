@@ -39,6 +39,7 @@ import { NotificationComponent } from './notifications/notification/notification
 import { GlobalErrorHandler } from './error-handlers/global-error-handler';
 import { ProblemLeaderboardComponent } from './problem/problem-leaderboard/problem-leaderboard.component';
 import { ProblemLeaderboardPageComponent } from './problem/problem-leaderboard-page/problem-leaderboard-page.component';
+import { ContactComponent } from './contact/contact.component';
 
 @NgModule({
 	declarations: [
@@ -61,7 +62,8 @@ import { ProblemLeaderboardPageComponent } from './problem/problem-leaderboard-p
 		NotificationsComponent,
 		NotificationComponent,
 		ProblemLeaderboardComponent,
-		ProblemLeaderboardPageComponent
+		ProblemLeaderboardPageComponent,
+		ContactComponent
 	],
 	imports: [
 		BrowserModule,

@@ -35,7 +35,7 @@ export class ProblemLeaderboardComponent implements OnInit {
 					if (a.passedTests === b.passedTests) {
 						return a.avgCompTime - b.avgCompTime;
 					}
-					return a.passedTests - b.passedTests;
+					return b.passedTests - a.passedTests;
 				});
 
 				for (const solution of this.solutions) {

@@ -16,7 +16,7 @@ import { interval, Subscription } from 'rxjs';
 export class CodeEditorComponent implements AfterViewInit, OnDestroy, OnChanges {
 
 	@Input() theme = 'ace/theme/twilight';
-	@Input() lang = 'ace/mode/javascript'
+	@Input() lang = 'javascript'
 	@Input() id = 0;
 	@Input() saveId: string;
 	@Input() disabled = false;
@@ -42,7 +42,7 @@ export class CodeEditorComponent implements AfterViewInit, OnDestroy, OnChanges 
 			this.codeEditor = ace.edit(`code-editor-${this.id}`, editorOptions);
 			this.codeEditor.setTheme(this.theme);
 			if (this.lang) {
-				this.codeEditor.getSession().setMode(this.lang);
+				this.codeEditor.getSession().setMode(`ace/mode/${this.lang}`);
 			}
 			this.codeEditor.setShowFoldWidgets(true);
 
@@ -101,7 +101,7 @@ export class CodeEditorComponent implements AfterViewInit, OnDestroy, OnChanges 
 				localStorage.setItem(this.saveId, this.getCode());
 			});
 		} else if (change.lang && this.lang) {
-			this.codeEditor.getSession().setMode(this.lang);
+			this.codeEditor.getSession().setMode(`ace/mode/${this.lang}`);
 		}
 		else if (change.theme && this.theme) {
 			this.codeEditor.setTheme(this.theme);

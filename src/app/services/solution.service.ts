@@ -8,7 +8,7 @@ export interface Solution {
 	problem: number;
 	code: string;
 	languageId: number;
-	tokens: string;
+	tokens?: string;
 	passedTests?: number;
 	avgCompTime?: number;
 }
@@ -25,10 +25,30 @@ export interface Result {
 	};
 }
 
+export interface Language {
+	id: number;
+	name: string;
+	ace_mode: string;
+}
+
 @Injectable({
 	providedIn: 'root'
 })
 export class SolutionService {
+
+	languages: Language[] = [
+		{
+			id: 63,
+			name: 'JavaScript (Node.js)',
+			ace_mode: 'javascript'
+		},
+		{
+			id: 71,
+			name: 'Python (3.8.1)',
+			ace_mode: 'python'
+		}
+	]
+
 	constructor(
 		private http: HttpClient
 	) { }

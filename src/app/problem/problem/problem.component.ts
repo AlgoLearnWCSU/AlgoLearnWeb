@@ -1,11 +1,12 @@
 import { OnInit, ViewChild } from '@angular/core';
 import { Component } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
 import { ActivatedRoute } from '@angular/router';
 import { CodeEditorComponent } from 'src/app/code-editor/code-editor.component';
 import { LoggerService } from 'src/app/services/logger.service';
 import { NotifierService } from 'src/app/services/notifier.service';
 import { Category, Problem, ProblemService, TestCase } from 'src/app/services/problem.service';
-import { Result, Solution, SolutionService } from 'src/app/services/solution.service';
+import { Language, Result, Solution, SolutionService } from 'src/app/services/solution.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -22,20 +23,15 @@ export class ProblemComponent implements OnInit {
 	categories: Category[];
 	testCases: TestCase[];
 	results: Result[];
-	solution: Solution = {
-		id: null,
-		solver: this.userService.username,
-		problem: null,
-		code: '',
-		languageId: 63,
-		tokens: ''
-	};
+	solutionId: number;
 	loadingSubmit = false;
 	loadingResults = false;
+	lang;
+	solution;
 
 	constructor(
 		private problemService: ProblemService,
-		private solutionService: SolutionService,
+		public solutionService: SolutionService,
 		public userService: UserService,
 		private loggerService: LoggerService,
 		private notifierService: NotifierService,
@@ -44,14 +40,23 @@ export class ProblemComponent implements OnInit {
 
 	ngOnInit() {
 		// get problem data from DB
+		this.lang = this.solutionService.languages[0];
 		this.route.params.subscribe(params => {
 			if (params.id != null) {
 				this.id = params.id;
 				const storedSolutionId = localStorage.getItem(`solution-id-${this.id}`);
 				if (storedSolutionId !== null) {
-					this.solution.id = parseInt(storedSolutionId);
+					this.solutionId = parseInt(storedSolutionId);
 				}
-				this.solution.problem = parseInt(this.id);
+				let storedLang: any = localStorage.getItem('lang');
+				if (storedLang !== null) {
+					storedLang = JSON.parse(storedLang);
+					for (let l of this.solutionService.languages) {
+						if (l.id == storedLang.id) {
+							this.lang = l;
+						}
+					}
+				}
 				this.problemService.getProblemById(params.id).subscribe(
 					problem => {
 						this.problem = problem;
@@ -71,6 +76,10 @@ export class ProblemComponent implements OnInit {
 		});
 	}
 
+	changeLang(lang: MatSelectChange) {
+		localStorage.setItem('lang', JSON.stringify(lang.value));
+	}
+
 	handleError(err) {
 		this.loadingSubmit = false;
 		this.loadingResults = false;
@@ -85,8 +94,13 @@ export class ProblemComponent implements OnInit {
 
 	async runCode() {
 		this.loadingSubmit = true;
-		this.solution.code = this.codeEditor.getCode();
-		this.solution.solver = this.userService.username;
+		this.solution = {
+			id: this.solutionId,
+			solver: this.userService.username,
+			problem: this.problem.id,
+			code: this.codeEditor.getCode(),
+			languageId: this.lang.id
+		};
 		this.results = null;
 		try {
 			if (this.solution.id == null) {

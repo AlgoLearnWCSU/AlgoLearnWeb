@@ -1,22 +1,28 @@
 <div *ngIf="problem != null">
-	<h2>{{problem.name}}</h2>
+	<h2>{{ problem.name }}</h2>
 	<div class="divider"></div>
-	<p>{{ problem.description }}</p>
+	<p *ngFor="let line of problem.description.split('\n')">{{line}}</p>
 </div>
 
-<div *ngIf="categories != null && categories.length > 0">
+<ng-template [ngIf]="categories != null && categories.length > 0">
 	<h5>Categories</h5>
 	<div class="divider"></div>
-	<div class="row">
-		<div *ngFor="let category of categories;index as idx">
-			<p>
-				<ng-template [ngIf]="idx !== 0">, </ng-template>{{category.name}}
-			</p>
-		</div>
+	<div class="row mb-3">
+		<mat-chip-list>
+			<mat-chip *ngFor="let category of categories">
+				{{category.name}}
+			</mat-chip>
+		</mat-chip-list>
 	</div>
-</div>
+</ng-template>
 
-<app-code-editor class="mb-5" id="0" [saveId]="id"></app-code-editor>
+<mat-form-field appearance="fill">
+	<mat-label>Language</mat-label>
+	<mat-select [(value)]="lang" (selectionChange)=changeLang($event)>
+		<mat-option *ngFor="let l of solutionService.languages" [value]="l">{{l.name}}</mat-option>
+	</mat-select>
+</mat-form-field>
+<app-code-editor class="mb-5" id="0" [lang]="lang.ace_mode" [saveId]="id"></app-code-editor>
 <div *ngIf="userService.isLoggedIn" class="pt-3">
 	<div class="w-100">
 		<button type="button" class="btn btn-primary float-right" (click)="runCode()">Submit</button>
@@ -25,32 +31,36 @@
 	</mat-progress-bar>
 </div>
 
-<h4 class="mt-5">Test Cases:</h4>
-<p *ngIf="results != null && testCases != null && solution.passedTests != null" class="float-right">
-	{{solution.passedTests}}/{{testCases.length}} passed</p>
+<h4 class="mt-5">Test Cases</h4>
 <div class="divider"></div>
-<div class="p-3 rounded" *ngFor="let testCase of testCases; index as idx">
-	<p>Test Case {{idx}}:</p>
-	<mat-progress-bar *ngIf="loadingResults" class="rounded w-75 mt-2" mode="indeterminate">
-	</mat-progress-bar>
-	<p>Input:</p>
-	<p *ngFor="let line of testCase.sampleInput.split('\n'); index as idx">{{line}}</p>
+<p *ngIf="results != null && testCases != null &&  solution != null && solution.passedTests != null">
+	{{solution.passedTests}}/{{testCases.length}} passed</p>
+<mat-card class="mb-3 p-3 rounded" *ngFor="let testCase of testCases; index as idx">
+	<mat-card-header class="ml-0">
+		<mat-card-title>Test Case {{idx}}</mat-card-title>
+	</mat-card-header>
+	<mat-card-content>
+		<mat-progress-bar *ngIf="loadingResults" class="rounded w-75 mt-2" mode="indeterminate">
+		</mat-progress-bar>
+		<p>Input:</p>
+		<p *ngFor="let line of testCase.sampleInput.split('\n'); index as idx">{{line}}</p>
 
-	<ng-template [ngIf]="results != null && results[idx] != null && results[idx].stdout != null">
-		<p>Actual Output:</p>
-		<p *ngFor="let line of results[idx].stdout.split('\n'); index as idx">{{line}}</p>
-	</ng-template>
+		<ng-template [ngIf]="results != null && results[idx] != null && results[idx].stdout != null">
+			<p>Actual Output:</p>
+			<p *ngFor="let line of results[idx].stdout.split('\n'); index as idx">{{line}}</p>
+		</ng-template>
 
-	<p>Expected Output:</p>
-	<p *ngFor="let line of testCase.sampleOutput.split('\n'); index as idx">{{line}}</p>
+		<p>Expected Output:</p>
+		<p *ngFor="let line of testCase.sampleOutput.split('\n'); index as idx">{{line}}</p>
 
-	<ng-template [ngIf]="results != null && results[idx] != null && results[idx].stderr != null">
-		<p>Actual Output:</p>
-		<p *ngFor="let line of results[idx].stderr.split('\n'); index as idx">{{line}}</p>
-	</ng-template>
+		<ng-template [ngIf]="results != null && results[idx] != null && results[idx].stderr != null">
+			<p>Error log:</p>
+			<p *ngFor="let line of results[idx].stderr.split('\n'); index as idx">{{line}}</p>
+		</ng-template>
 
-	<p *ngIf="results != null && results[idx] != null && results[idx].time != null">Time: {{results[idx].time}}</p>
-</div>
+		<p *ngIf="results != null && results[idx] != null && results[idx].time != null">Time: {{results[idx].time}}</p>
+	</mat-card-content>
+</mat-card>
 
 <h2>Discussion</h2>
 <div class="divider"></div>

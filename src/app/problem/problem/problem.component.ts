@@ -76,6 +76,9 @@ export class ProblemComponent implements OnInit {
 	}
 
 	isTestCasePassed(actual: string, expected: string) {
+		if (actual == null || expected == null) {
+			return false;
+		}
 		while (actual.endsWith('\n')) {
 			actual = actual.substr(0, actual.length - 1);
 		}

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotifierService } from './services/notifier.service';
 import { UserService } from './services/user.service';
 
 @Component({
@@ -14,10 +15,16 @@ export class AppComponent implements OnInit {
 	constructor(
 		private route: ActivatedRoute,
 		private userService: UserService,
-		private router: Router
+		private router: Router,
+		//private notification: NotifierService
 	) { }
 
 	ngOnInit() {
+		// this.notification.addNotification({
+		// 	warning: true,
+		// 	title: 'test',
+		// 	message: ''
+		// })
 		const loggedIn = localStorage.getItem('loggedIn');
 		if (loggedIn == null) {
 

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Message } from '@angular/compiler/src/i18n/i18n_ast';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -14,6 +15,9 @@ export class LoggerService {
 	) { }
 
 	logError(message: string) {
+		if (!environment.errorLoggerOn) {
+			return;
+		}
 		if (message.length > 2000) {
 			message = message.substr(0, 1997) + '```';
 		}

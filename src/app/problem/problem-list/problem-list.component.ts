@@ -19,7 +19,6 @@ export class ProblemListComponent implements OnInit {
 		categories: Category[];
 	}[] = [];
 
-
 	constructor(
 		public userService: UserService,
 		private problemService: ProblemService

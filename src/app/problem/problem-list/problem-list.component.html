@@ -28,10 +28,36 @@
 		</mat-list-item>
 	</mat-list>
 </div>
-<div *ngIf="userService.isLoggedIn && userService.isAdmin">
+<div
+	*ngIf="userService.isLoggedIn && userService.myPendingReviewedProblems != null && userService.myPendingReviewedProblems.length > 0">
+	<h4 class="mt-3">My Pending Problems</h4>
+	<div class="divider"></div>
+	<mat-list>
+		<mat-list-item *ngFor="let problem of userService.myPendingReviewedProblems; index as idx" class="d-block"
+			style="width: fit-content">
+			<a routerLink="/problem/solve/{{problem.problem.id}}">{{problem.problem.name}}</a>
+			{{": " + problem.problem.description | slice:0:50-problem.problem.name.length}}
+			<span *ngIf="problem.problem.description.length + problem.problem.name.length + 2> 50">...</span>
+			<mat-chip-list class="pl-2">
+				<mat-chip *ngFor="let category of problem.categories">{{ category.name }}</mat-chip>
+			</mat-chip-list>
+			<a *ngIf="userService.isLoggedIn && (userService.isAdmin || userService.username === problem.problem.poster)"
+				class="pl-2" routerLink="/problem/edit/{{problem.problem.id}}">
+				<i class="far fa-edit"></i>
+			</a>
+			<a *ngIf="userService.isLoggedIn && (userService.isAdmin || userService.username === problem.problem.poster)"
+				class="pl-2"
+				(click)="deleteProblem(problem.problem); userService.myPendingReviewedProblems.splice(idx, 1);">
+				<i class="far fa-trash-alt"></i>
+			</a>
+		</mat-list-item>
+	</mat-list>
+</div>
+<div
+	*ngIf="userService.isLoggedIn && userService.isAdmin && notReviewedProblems != null && notReviewedProblems.length > 0">
 	<h4 class="mt-3">Problems To Review</h4>
 	<div class="divider"></div>
-	<mat-list *ngIf=" notReviewedProblems !=null">
+	<mat-list>
 		<mat-list-item *ngFor="let problem of notReviewedProblems; index as idx" class="d-block"
 			style="width: fit-content">
 			<a routerLink="/problem/solve/{{problem.problem.id}}">{{problem.problem.name}}</a>

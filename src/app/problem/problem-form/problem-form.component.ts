@@ -92,6 +92,7 @@ export class ProblemFormComponent implements OnInit {
 			title: 'Success',
 			message: `Problem ${this.mode == 'Create' ? 'creat' : this.mode.toLowerCase()}ed`
 		});
+		this.userService.updatePendingProblems();
 		this.router.navigate(['problem']);
 	}
 

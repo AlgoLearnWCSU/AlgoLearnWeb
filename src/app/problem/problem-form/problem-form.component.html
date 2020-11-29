@@ -31,7 +31,7 @@
 									[ngModelOptions]="{standalone:true}">
 								<button type="button" class="btn p-0 my-auto" mat-button matSuffix mat-icon-button
 									aria-label="Clear" (click)="deleteCategory(i)">
-									<i class="far fa-times-circle"></i>
+									<span style="color: white"><i class="far fa-times-circle"></i></span>
 								</button>
 							</mat-form-field>
 						</div>
@@ -46,7 +46,7 @@
 						<h4 class="d-inline w-100">Test Case: {{i}}</h4>
 						<button type="button" *ngIf="i > 2" class="btn float-right" mat-button matSuffix mat-icon-button
 							aria-label="Clear" (click)="deleteTestCase(i)">
-							<i class="fas fa-times"></i>
+							<span style="color: white"><i class="fas fa-times"></i></span>
 						</button>
 					</div>
 					<div class="divider"></div>

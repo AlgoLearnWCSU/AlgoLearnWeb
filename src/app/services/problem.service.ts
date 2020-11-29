@@ -61,6 +61,10 @@ export class ProblemService {
 		return this.http.get<Problem[]>(`${environment.apiBase}/problem/search?reviewed=false`);
 	}
 
+	getNonReviewedProblemsByUsername(username: String) {
+		return this.http.get<Problem[]>(`${environment.apiBase}/problem/search?reviewed=false&poster=${username}`);
+	}
+
 	getProblemById(id: number) {
 		return this.http.get<Problem>(`${environment.apiBase}/problem/${id}`);
 	}

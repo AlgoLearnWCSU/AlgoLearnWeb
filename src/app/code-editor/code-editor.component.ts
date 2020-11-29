@@ -3,7 +3,19 @@ import { Component, OnInit, Input, OnDestroy, OnChanges, AfterViewInit } from '@
 import * as ace from 'ace-builds'; // ace module ..
 import 'ace-builds/webpack-resolver';
 // language package, choose your own 
+import 'ace-builds/src-min-noconflict/mode-python';
 import 'ace-builds/src-min-noconflict/mode-javascript';
+import 'ace-builds/src-min-noconflict/mode-csharp';
+import 'ace-builds/src-min-noconflict/mode-c_cpp';
+import 'ace-builds/src-min-noconflict/mode-kotlin';
+import 'ace-builds/src-min-noconflict/mode-java';
+import 'ace-builds/src-min-noconflict/mode-rust';
+import 'ace-builds/src-min-noconflict/mode-typescript';
+import 'ace-builds/src-min-noconflict/mode-haskell';
+import 'ace-builds/src-min-noconflict/mode-golang';
+
+
+
 // ui-theme package
 import 'ace-builds/src-min-noconflict/theme-twilight';
 import { interval, Subscription } from 'rxjs';

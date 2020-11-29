@@ -108,16 +108,16 @@ export class SolutionService {
 		return this.http.get<Solution>(`${environment.apiBase}/solution/${id}`);
 	}
 
-	getSolutionsByUsernameAndProblem(id: number) {
-		return this.http.get<Solution[]>(`${environment.apiBase}/solution/${id}`);
-	}
-
 	getResultsBySolutionId(id: number) {
 		return this.http.get<{ submissions: Result[] }>(`${environment.apiBase}/solution/result/${id}`);
 	}
 
 	getSolutionsByProblemId(problem: number) {
 		return this.http.get<Solution[]>(`${environment.apiBase}/solution/search?problem=${problem}`);
+	}
+
+	getSolutionsByProblemIdAndUserAndLang(problem: number, username: string, langId: number) {
+		return this.http.get<Solution[]>(`${environment.apiBase}/solution/search?problem=${problem}&solver=${username}&languageId=${langId}`);
 	}
 
 	createSolution(solution: Solution) {

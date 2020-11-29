@@ -19,11 +19,10 @@ export class ProblemComponent implements OnInit {
 	@ViewChild(CodeEditorComponent) codeEditor: CodeEditorComponent;
 
 	problem: Problem;
-	id: string;
+	id: number;
 	categories: Category[];
 	testCases: TestCase[];
 	results: Result[];
-	solutionId: number;
 	loadingSubmit = false;
 	loadingResults = false;
 	lang;
@@ -44,10 +43,6 @@ export class ProblemComponent implements OnInit {
 		this.route.params.subscribe(params => {
 			if (params.id != null) {
 				this.id = params.id;
-				const storedSolutionId = localStorage.getItem(`solution-id-${this.id}`);
-				if (storedSolutionId !== null) {
-					this.solutionId = parseInt(storedSolutionId);
-				}
 				let storedLang: any = localStorage.getItem('lang');
 				if (storedLang !== null) {
 					storedLang = JSON.parse(storedLang);
@@ -80,6 +75,16 @@ export class ProblemComponent implements OnInit {
 		localStorage.setItem('lang', JSON.stringify(lang.value));
 	}
 
+	isTestCasePassed(actual: string, expected: string) {
+		while (actual.endsWith('\n')) {
+			actual = actual.substr(0, actual.length - 1);
+		}
+		while (expected.endsWith('\n')) {
+			expected = expected.substr(0, expected.length - 1);
+		}
+		return actual === expected;
+	}
+
 	handleError(err) {
 		this.loadingSubmit = false;
 		this.loadingResults = false;
@@ -95,12 +100,20 @@ export class ProblemComponent implements OnInit {
 	async runCode() {
 		this.loadingSubmit = true;
 		this.solution = {
-			id: this.solutionId,
+			id: null,
 			solver: this.userService.username,
 			problem: this.problem.id,
 			code: this.codeEditor.getCode(),
 			languageId: this.lang.id
 		};
+		const previousSolutions =
+			await this.solutionService.getSolutionsByProblemIdAndUserAndLang(
+				this.id, this.userService.username, this.lang.id).toPromise();
+		if (previousSolutions != null && previousSolutions.length > 1) {
+			this.solution.id = previousSolutions[0].id;
+		} else {
+			this.solution.id = null;
+		}
 		this.results = null;
 		try {
 			if (this.solution.id == null) {

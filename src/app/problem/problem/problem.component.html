@@ -37,7 +37,10 @@
 	{{solution.passedTests}}/{{testCases.length}} passed</p>
 <mat-card class="mb-3 p-3 rounded" *ngFor="let testCase of testCases; index as idx">
 	<mat-card-header class="ml-0">
-		<mat-card-title>Test Case {{idx}}</mat-card-title>
+		<mat-card-title>Test Case {{idx}}<span style="color: red;" class="ml-3"
+				*ngIf="results != null && results.length > 0 && !isTestCasePassed(results[idx].stdout, testCase.sampleOutput)"><i
+					class="fas fa-times"></i></span>
+		</mat-card-title>
 	</mat-card-header>
 	<mat-card-content>
 		<div class="mt-3" *ngIf="loadingResults"></div>

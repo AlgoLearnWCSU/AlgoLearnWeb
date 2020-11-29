@@ -1,5 +1,5 @@
 <mat-paginator *ngIf="solutions != null" class="mb-3 mb-2 rounded" [length]="solutions.length"
-	[pageIndex]="pageState.pageIndex" [pageSize]="pageState.pageSize" [pageSizeOptions]="[5, 10, 25, 100]">
+	[pageIndex]="pageState.pageIndex" [pageSize]="pageState.pageSize" [pageSizeOptions]="[5, 10, 25, 100]" (page)="updateSolutiontView($event)">
 </mat-paginator>
 <div *ngIf="solutions">
 	<div *ngFor="let solution of solutions |

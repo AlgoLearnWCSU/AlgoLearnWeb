@@ -58,4 +58,8 @@ export class ProblemLeaderboardComponent implements OnInit {
 			err => console.error(err)
 		);
 	}
+
+	updateSolutiontView(event: PageEvent) {
+		this.pageState = event;
+	}
 }

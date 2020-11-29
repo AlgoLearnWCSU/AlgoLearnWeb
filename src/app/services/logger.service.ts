@@ -24,6 +24,9 @@ export class LoggerService {
 	}
 
 	logContactUs(message: string) {
+		if (message.length > 2000) {
+			message = message.substr(0, 2000);
+		}
 		return this.http.post('https://discord.com/api/webhooks/781327691763679273/DqnDI5K2vvoSS9MZ0SW33ZV7ip1bjBCazfHcu2DrlfavCK3H-Mep1jZClm22UKoCnYWW', {
 			content: message,
 			username: this.userService.username

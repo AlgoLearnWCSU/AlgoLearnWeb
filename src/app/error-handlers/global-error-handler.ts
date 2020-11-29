@@ -1,5 +1,6 @@
 import { coerceNumberProperty } from '@angular/cdk/coercion';
 import { ErrorHandler, Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { LoggerService } from '../services/logger.service';
 import { NotifierService } from '../services/notifier.service';
 @Injectable()
@@ -10,6 +11,10 @@ export class GlobalErrorHandler implements ErrorHandler {
 	) { }
 
 	handleError(err) {
+		if (!environment.errorLoggerOn) {
+			throw err;
+		}
+
 		if (!err || err.alreadyThrown)
 			return;
 		this.notifierService.addNotification({

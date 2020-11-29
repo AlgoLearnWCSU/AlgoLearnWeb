@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { Category, Problem, ProblemService } from './problem.service';
 
 export interface User {
 	username: string,
@@ -25,9 +25,14 @@ export class UserService {
 	private user: User;
 	private _jwt: string;
 
+	myPendingReviewedProblems: {
+		problem: Problem;
+		categories: Category[];
+	}[] = [];
+
 	constructor(
 		private http: HttpClient,
-		private router: Router
+		private problemService: ProblemService
 	) { }
 
 	setUser(username: string) {
@@ -35,7 +40,30 @@ export class UserService {
 			.subscribe(user => {
 				this.user = user;
 				console.log('User logged in as', user.username);
+				this.updatePendingProblems();
 			});
+	}
+
+	updatePendingProblems() {
+		if (!this.isLoggedIn) {
+			return;
+		}
+		this.problemService.getNonReviewedProblemsByUsername(this.username).subscribe(
+			data => {
+				this.myPendingReviewedProblems = [];
+				for (const problem of data) {
+					this.myPendingReviewedProblems.push({
+						problem,
+						categories: []
+					});
+					const i = this.myPendingReviewedProblems.length - 1;
+					this.problemService.getCategoriesByProblemId(problem.id).subscribe(
+						categories => {
+							this.myPendingReviewedProblems[i].categories = categories;
+						});
+				}
+			},
+			err => console.error(err));
 	}
 
 	getUserByUsername(username: string) {

@@ -1,4 +1,5 @@
 import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { LoggerService } from 'src/app/services/logger.service';
 import { NotifierService } from 'src/app/services/notifier.service';
 import { Problem, Category, ProblemService } from 'src/app/services/problem.service';
@@ -29,6 +30,9 @@ export class ProblemListComponent implements OnInit {
 		categories: Category[];
 	}[] = [];
 
+	reviewedPageState: PageEvent;
+	notReviewedPageState: PageEvent;
+
 	constructor(
 		public userService: UserService,
 		private problemService: ProblemService,
@@ -38,6 +42,28 @@ export class ProblemListComponent implements OnInit {
 
 	ngOnInit(): void {
 		this.getProblems();
+
+		this.reviewedPageState = {
+			length: this.filteredProblems.length,
+			pageIndex: 0,
+			pageSize: 5,
+			previousPageIndex: null
+		};
+
+		this.notReviewedPageState = {
+			length: this.notReviewedProblems.length,
+			pageIndex: 0,
+			pageSize: 5,
+			previousPageIndex: null
+		};
+	}
+
+	updateReviewedProblemListView(event: PageEvent) {
+		this.reviewedPageState = event;
+	}
+
+	updateNotReviewedProblemListView(event: PageEvent) {
+		this.notReviewedPageState = event;
 	}
 
 	getProblems(): void {

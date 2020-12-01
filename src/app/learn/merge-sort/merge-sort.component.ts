@@ -12,14 +12,71 @@ export class MergeSortComponent implements OnInit {
 	workArrIdx: number;
 	stepCount = 0;
 	split = 0;
-	merge1 = 0; 
+	merge1 = 0;
 	merge2 = 0;
 	comp1 = 0;
 	comp2 = 0;
 
-	mergeSortJSCode = '';
+	mergeSortJSCode =
+		`function mergeSort(arr) {
+	split(arr, arr2, 0, arr.length());
+}
 
-	mergeSortPseudoCode = '';
+function split(arr, arr2, begin, end) {
+	if (end - begin <= 1) 
+		return;
+	middle = Math.floor((end + begin) / 2);
+	split(arr, arr2, begin, middle);
+	split(arr, arr2, middle, end);
+	merge(arr, arr2, begin, middle, end);
+}
+
+function merge(arr, begin, middle, end) {
+	i = begin;
+	j = middle;
+	for (k = begin; k < end; ++k) {
+		if (i < middle && (j >= end || arr[i] <= arr[j])) {
+			arr2[k] = arr[i];
+			++i;
+		}
+		else {
+			arr2[k] = arr[j];
+			++j;
+		}
+	}
+	return arr2;
+}`;
+
+	mergeSortPseudoCode =
+		`function mergeSort(arr[0..n]) {
+	split(arr, 0, n)
+}
+
+function split(arr[0,n], arr2[0..n], begin, end) {
+	if (end - begin <= 1) 
+		return
+	middle <- floor((end + begin) / 2)
+	split(arr, arr2, begin, middle)
+	split(arr, arr2, middle, end)
+	merge(arr, arr2, begin, middle, end)
+}
+
+function merge(arr[0,n], begin, middle, end) {
+	i <- begin
+	j <- middle
+	for (k <- begin, k < end; ++k) {
+		if (i < middle AND (j >= end OR arr[i] <= arr[j])) {
+			arr2[k] = arr[i]
+			++i
+		}
+		else {
+			arr2[k] <- arr[j]
+			++j
+		}
+	}
+	return arr2
+}
+`;
 
 	constructor() { }
 
@@ -47,8 +104,8 @@ export class MergeSortComponent implements OnInit {
 		this.stepCount = null;
 	}
 
-	splitMerge(iBegin:number, iEnd:number) {
-		if (iEnd - iBegin <= 1) 
+	splitMerge(iBegin: number, iEnd: number) {
+		if (iEnd - iBegin <= 1)
 			return;
 		let iMiddle = Math.floor((iEnd + iBegin) / 2);
 		this.splitMerge(iBegin, iMiddle);
@@ -56,7 +113,7 @@ export class MergeSortComponent implements OnInit {
 		this.merge(iBegin, iMiddle, iEnd);
 	}
 
-	merge(iBegin:number, iMiddle:number, iEnd:number) {
+	merge(iBegin: number, iMiddle: number, iEnd: number) {
 		let i = iBegin;
 		let j = iMiddle;
 		for (let k = iBegin; k < iEnd; ++k) {
@@ -69,7 +126,7 @@ export class MergeSortComponent implements OnInit {
 				++j;
 			}
 		}
-		for (let index = 0; index < 10; ++index) 
+		for (let index = 0; index < 10; ++index)
 			this.arr[index] = this.workArr[index];
 	}
 

@@ -12,14 +12,19 @@ export class MergeSortComponent implements OnInit {
 	workArrIdx: number;
 	stepCount = 0;
 	split = 0;
-	merge1 = 0; 
+	merge1 = 0;
 	merge2 = 0;
 	comp1 = 0;
 	comp2 = 0;
 
-	mergeSortJSCode = '';
+	nextStack = [{
+		func: 'Splitting',
+		arguments: [0, 10]
+	}];
 
-	mergeSortPseudoCode = '';
+	mergeSortJSCode = 'test';
+
+	mergeSortPseudoCode = 'test';
 
 	constructor() { }
 
@@ -40,6 +45,10 @@ export class MergeSortComponent implements OnInit {
 			this.arr.push(Math.floor(Math.random() * 100));
 			this.workArr.push(this.arr[i]);
 		}
+		this.nextStack = [{
+			func: 'Splitting',
+			arguments: [0, 10]
+		}];
 	}
 
 	mergeSort() {
@@ -47,8 +56,8 @@ export class MergeSortComponent implements OnInit {
 		this.stepCount = null;
 	}
 
-	splitMerge(iBegin:number, iEnd:number) {
-		if (iEnd - iBegin <= 1) 
+	splitMerge(iBegin: number, iEnd: number) {
+		if (iEnd - iBegin <= 1)
 			return;
 		let iMiddle = Math.floor((iEnd + iBegin) / 2);
 		this.splitMerge(iBegin, iMiddle);
@@ -56,7 +65,7 @@ export class MergeSortComponent implements OnInit {
 		this.merge(iBegin, iMiddle, iEnd);
 	}
 
-	merge(iBegin:number, iMiddle:number, iEnd:number) {
+	merge(iBegin: number, iMiddle: number, iEnd: number) {
 		let i = iBegin;
 		let j = iMiddle;
 		for (let k = iBegin; k < iEnd; ++k) {
@@ -69,11 +78,61 @@ export class MergeSortComponent implements OnInit {
 				++j;
 			}
 		}
-		for (let index = 0; index < 10; ++index) 
+		for (let index = 0; index < 10; ++index)
+			this.arr[index] = this.workArr[index];
+	}
+
+	splitMergeNext(params: number[]) {
+		let iBegin = params[0];
+		let iEnd = params[1];
+		if (iEnd - iBegin <= 1)
+			return;
+		let iMiddle = Math.floor((iEnd + iBegin) / 2);
+		this.nextStack.push({
+			func: 'Merging',
+			arguments: [iBegin, iMiddle, iEnd]
+		});
+		this.nextStack.push({
+			func: 'Splitting',
+			arguments: [iMiddle, iEnd]
+		});
+		this.nextStack.push({
+			func: 'Splitting',
+			arguments: [iBegin, iMiddle]
+		});
+	}
+
+	mergeNext(params: number[]) {
+		let iBegin = params[0];
+		let iMiddle = params[1];
+		let iEnd = params[2];
+		let i = iBegin;
+		let j = iMiddle;
+		for (let k = iBegin; k < iEnd; ++k) {
+			if (i < iMiddle && (j >= iEnd || this.arr[i] <= this.arr[j])) {
+				this.workArr[k] = this.arr[i];
+				++i;
+			}
+			else {
+				this.workArr[k] = this.arr[j];
+				++j;
+			}
+		}
+		for (let index = 0; index < 10; ++index)
 			this.arr[index] = this.workArr[index];
 	}
 
 	nextStep() {
+		if (this.nextStack.length === 0) {
+			return;
+		}
+		const step = this.nextStack.pop();
+		if (step.func === 'Splitting') {
+			this.splitMergeNext(step.arguments);
+		} else if (step.func === 'Merging') {
+			this.mergeNext(step.arguments);
+		}
+
 		/*if (this.stepCount != null) {
 			let temp = 0;
 			switch(this.stepCount) {

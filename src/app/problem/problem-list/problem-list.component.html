@@ -61,7 +61,7 @@
 				</a>
 				<a *ngIf="userService.isLoggedIn && (userService.isAdmin || userService.username === problem.problem.poster)"
 					class="pl-2"
-					(click)="deleteProblem(problem.problem); userService.myPendingReviewedProblems.splice(idx, 1);">
+					(click)="deleteProblem(problem.problem); userService.myPendingReviewedProblems.splice(idx, 1); notReviewedProblems.splice(idx,1);">
 					<i class="far fa-trash-alt"></i>
 				</a>
 			</mat-list-item>
@@ -85,7 +85,8 @@
 					<i class="far fa-edit"></i>
 				</a>
 				<a *ngIf="userService.isLoggedIn && (userService.isAdmin || userService.username === problem.problem.poster)"
-					class="pl-2" (click)="deleteProblem(problem.problem); notReviewedProblems.splice(idx, 1);">
+					class="pl-2"
+					(click)="deleteProblem(problem.problem); userService.myPendingReviewedProblems.splice(idx, 1); notReviewedProblems.splice(idx, 1);">
 					<i class="far fa-trash-alt"></i>
 				</a>
 			</mat-list-item>

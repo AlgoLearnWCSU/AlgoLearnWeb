@@ -1,7 +1,25 @@
+<div *ngIf="problem != null">
+	<h2>{{ problem.name }}</h2>
+	<div class="divider"></div>
+	<p *ngFor="let line of problem.description.split('\n')">{{line}}</p>
+</div>
+
+<ng-template [ngIf]="categories != null && categories.length > 0">
+	<h5>Categories</h5>
+	<div class="divider"></div>
+	<div class="row mb-3">
+		<mat-chip-list>
+			<mat-chip *ngFor="let category of categories">
+				{{category.name}}
+			</mat-chip>
+		</mat-chip-list>
+	</div>
+</ng-template>
+
 <h2 class="pt-3">Discussion </h2>
 <a routerLink="/problem/solve/{{id}}">
-	<i class="ml-5 fas fa-terminal"></i>
-	Back to the problem
+	<i class="ml-5 fas fa-code"></i>
+	Solve the Problem
 </a>
 <div class="divider"></div>
 <app-problem-discussion [id]="id"></app-problem-discussion>

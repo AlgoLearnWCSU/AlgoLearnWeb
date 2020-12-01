@@ -127,15 +127,7 @@ export class ProblemComponent implements OnInit {
 			localStorage.setItem(`solution-id-${this.id}`, this.solution.id.toString());
 			this.loadingResults = true;
 			setTimeout(() => {
-				this.solutionService.getResultsBySolutionId(this.solution.id).subscribe(res => {
-					this.results = res.submissions;
-					this.solutionService.getSolutionById(this.solution.id).subscribe(
-						sol => {
-							this.solution = sol
-							this.loadingResults = false;
-						}, this.handleError
-					);
-				}, this.handleError);
+				this.waitLoop();
 			}, 5000);
 			this.loadingSubmit = false;
 		} catch (err) {
@@ -147,6 +139,31 @@ export class ProblemComponent implements OnInit {
 			});
 			this.loggerService.logError('Error:\n```' + (err && err.message ? err.message : err.toString())
 				+ '```' + (err.stack ? 'Stack:```' + err.stack + '```' : '')).toPromise();
+		}
+	}
+
+	wait() {
+		return new Promise((resolve, reject) => {
+			setTimeout(() => resolve(), 2000);
+		});
+	}
+
+	async waitLoop() {
+		try {
+			while (true) {
+				const res = await this.solutionService.getResultsBySolutionId(this.solution.id).toPromise();
+				this.results = res.submissions;
+				if (this.results.every(submission => submission.status.id !== 2)) {
+					const sol = await this.solutionService.getSolutionById(this.solution.id).toPromise()
+					this.solution = sol
+					this.loadingResults = false;
+					return;
+				}
+				await this.wait();
+			}
+		}
+		catch (error) {
+			this.handleError(error);
 		}
 	}
 }

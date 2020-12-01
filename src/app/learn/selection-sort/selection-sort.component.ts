@@ -34,6 +34,20 @@ export class SelectionSortComponent implements OnInit {
 	Step 5 − Repeat until list is sorted	`
 
 
+	constructor() {
+
+	}
+	ngOnInit(): void {
+		this.randomize();
+	}
+	randomize() {
+		this.arr = [];
+		this.i = 0;
+		this.j = 0;
+		for (let i = 0; i < 10; ++i) {
+			this.arr.push(Math.floor(Math.random() * 100));
+		}
+	}
 	selectionSort() {
 		let len = this.arr.length;
 		for (let i = 0; i < len; i++) {
@@ -51,37 +65,27 @@ export class SelectionSortComponent implements OnInit {
 		}
 		return this.arr;
 	}
-
-
-
-	constructor() {
-
-	}
-	ngOnInit(): void {
-		this.randomize();
-	}
-	randomize() {
-		this.arr = [];
-		this.i = 0;
-		this.j = 0;
-		for (let i = 0; i < 10; ++i) {
-			this.arr.push(Math.floor(Math.random() * 100));
-		}
-	}
 	nextStep() {
-		if (this.i < this.arr.length - 1) {
-			if (this.j < this.arr.length - this.i - 1) {
-				if (this.arr[this.j] > this.arr[this.j + 1]) {
-					const temp = this.arr[this.j];
-					this.arr[this.j] = this.arr[this.j + 1];
-					this.arr[this.j + 1] = temp;
-				}
-				++this.j;
-				if (this.j >= this.arr.length - this.i - 1) {
-					this.j = 0;
-					++this.i;
+
+		if (this.i < this.arr.length) {
+			let min = this.i;
+			if (this.j < this.i + 1) {
+				if (this.arr[min] < this.arr[this.j]) {
+					min = this.j;
 				}
 			}
+			if (min !== this.i) {
+				let tmp = this.arr[this.i];
+				this.arr[this.i] = this.arr[min];
+				this.arr[min] = tmp;
+			}
+			++this.j;
+			if (this.j >= this.i + 1) {
+				this.j = 0;
+				++this.i;
+			}
 		}
+
 	}
 }
+

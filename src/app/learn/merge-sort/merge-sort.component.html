@@ -4,19 +4,33 @@
 	<div class="row justify-content-center">
 		<p class="pr-2 my-auto">Array: </p>
 		<div *ngFor="let num of arr; index as idx" class="array-box px-2">
-			<p class="my-auto" *ngIf="(comp1 != null && comp2 != null && (idx == comp1 || idx == comp2)) || 
-			((split != null) && idx == split) || ((merge1 != null && merge2 != null) &&(idx == merge1 || idx == merge2)); else notBold" style="font-weight: 900;"><u>{{num}}</u></p>
-			<ng-template #notBold><p>{{num}}</p></ng-template>			
+			<ng-template [ngIf]="nextStack != null && nextStack.length > 0">
+				<div *ngIf="nextStack[nextStack.length - 1].func === 'Splitting'">
+					<p *ngIf="idx >= nextStack[nextStack.length - 1].arguments[0] && idx <= nextStack[nextStack.length - 1].arguments[1]"
+						class="my-auto" style="color: green;">{{num}}</p>
+					<p *ngIf="idx < nextStack[nextStack.length - 1].arguments[0] || idx > nextStack[nextStack.length - 1].arguments[1]"
+						class="my-auto">{{num}}</p>
+				</div>
+				<div *ngIf="nextStack[nextStack.length - 1].func === 'Merging'">
+					<p *ngIf="idx >= nextStack[nextStack.length - 1].arguments[0] && idx < nextStack[nextStack.length - 1].arguments[1]"
+						class="my-auto" style="color: red;">{{num}}</p>
+					<p *ngIf="idx >= nextStack[nextStack.length - 1].arguments[1] && idx <= nextStack[nextStack.length - 1].arguments[2]"
+						class="my-auto" style="color: yellow;">{{num}}</p>
+					<p *ngIf="idx < nextStack[nextStack.length - 1].arguments[0] || idx > nextStack[nextStack.length - 1].arguments[2]"
+						class="my-auto">{{num}}</p>
+				</div>
+			</ng-template>
+			<p *ngIf="nextStack == null || nextStack.length === 0" class="my-auto">{{num}}</p>
 		</div>
 	</div>
-	<p class="my-auto" *ngIf="split != null" class="pt-3">Splitting at: {{arr[split]}}</p>
-	<p class="my-auto" *ngIf="merge1 != null && merge2 != null" class="pt-3">Merging from: {{arr[merge1]}} to {{arr[merge2]}}</p>
-	<p class="my-auto" *ngIf="comp1 != null && comp2 != null" class="pt-3">Comparing: {{arr[comp1]}}, {{arr[comp2]}}</p>
-	<div class="btn-group">
-		<button class="btn btn-primary" (click)="mergeSort()">Sort</button>
-		<button class="btn btn-secondary" (click)="nextStep()">Next Step</button>
-		<button class="btn btn-danger" (click)="randomize()">Reset</button>
-	</div>
+</div>
+<p *ngIf="nextStack != null && nextStack.length > 0">
+	{{nextStack[nextStack.length - 1].func}} [{{nextStack[nextStack.length - 1].arguments.join(' ')}}]
+</p>
+<div class="btn-group">
+	<button class="btn btn-primary" (click)="mergeSort()">Sort</button>
+	<button class="btn btn-secondary" (click)="nextStep()">Next Step</button>
+	<button class="btn btn-danger" (click)="randomize()">Reset</button>
 </div>
 
 <h4 class="pt-3">Psuedocode</h4>

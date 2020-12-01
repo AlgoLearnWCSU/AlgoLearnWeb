@@ -1,4 +1,6 @@
 import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
+import { LoggerService } from 'src/app/services/logger.service';
+import { NotifierService } from 'src/app/services/notifier.service';
 import { Problem, Category, ProblemService } from 'src/app/services/problem.service';
 import { UserService } from 'src/app/services/user.service';
 import { ProblemLeaderboardPageComponent } from '../problem-leaderboard-page/problem-leaderboard-page.component';
@@ -29,7 +31,9 @@ export class ProblemListComponent implements OnInit {
 
 	constructor(
 		public userService: UserService,
-		private problemService: ProblemService
+		private problemService: ProblemService,
+		private notfierService: NotifierService,
+		private loggerService: LoggerService
 	) { }
 
 	ngOnInit(): void {
@@ -78,8 +82,18 @@ export class ProblemListComponent implements OnInit {
 	deleteProblem(problem: Problem) {
 		this.problemService.deleteProblem(problem).subscribe(res => {
 			console.log('Deleted problem: ', problem);
+			this.notReviewedProblems = this.notReviewedProblems.filter(prob => prob.problem.id !== problem.id);
+			this.reviewedProblems = this.reviewedProblems.filter(prob => prob.problem.id !== problem.id);
+			this.userService.myPendingReviewedProblems = this.userService.myPendingReviewedProblems.filter(prob => prob.problem.id !== problem.id);
+			this.filterProblems();
 		}, err => {
-			console.error(err);
+			this.loggerService.logError('Error:\n```' + (err && err.message ? err.message : err.toString())
+				+ '```' + (err.stack ? 'Stack:```' + err.stack + '```' : '')).subscribe(console.log, console.error);
+			this.notfierService.addNotification({
+				warning: true,
+				title: 'Issue deleting problem',
+				message: `We ran into an issue deleting a problem. We have reported this issue to the development team. Issue: ${err && err.message ? err.message : err.toString()}`
+			});
 		});
 	}
 

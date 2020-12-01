@@ -99,7 +99,23 @@ export class ProblemFormComponent implements OnInit {
 	async submitProblem(form: NgForm) {
 		if (form.form.status === 'VALID') {
 			this.loadingSubmit = true;
-			if (this.mode == 'Create') {
+			for (let i = 0; i < this.categories.length; ++i) {
+				var check = RegExp(/[a-z]/gi);
+				if (!check.test(this.categories[i].name)) {
+					this.categories.splice(i, 1);
+					--i;
+				}
+			}
+			for (let i = 0; i < this.categories.length; ++i) {
+				this.categories[i].name = this.categories[i].name.replace(
+					/\w\S*/g,
+					function (txt) {
+						return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+					}
+				);
+			}
+			console.log(this.categories);
+			if (this.mode === 'Create') {
 				try {
 					this.problem.poster = this.userService.username;
 					this.id = (await this.problemService.createProblem(this.problem).toPromise()).id;
@@ -124,7 +140,7 @@ export class ProblemFormComponent implements OnInit {
 				} catch (err) {
 					this.handleError(err);
 				}
-			} else if (this.mode == 'Edit') {
+			} else if (this.mode === 'Edit') {
 				try {
 					const promsiseArray = [];
 					promsiseArray.push(this.problemService.editProblem(this.problem).toPromise());
@@ -151,7 +167,7 @@ export class ProblemFormComponent implements OnInit {
 				} catch (err) {
 					this.handleError(err);
 				}
-			} else if (this.mode == 'Review') {
+			} else if (this.mode === 'Review') {
 				try {
 					const promsiseArray = [];
 					this.problem.reviewed = true;

@@ -3,6 +3,8 @@ import { UserService } from '../../services/user.service';
 import { ProblemService, Comment } from '../../services/problem.service';
 import { NgForm } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -14,6 +16,8 @@ export class ProblemDiscussionComponent implements OnInit {
 
 	@Input() id: number;
 
+	// tslint:disable-next-line: variable-name
+	client_id = environment.gitHubClientId;
 	comments: Comment[];
 	isEditingComments: boolean[] = [];
 	newComment: Comment;
@@ -23,6 +27,7 @@ export class ProblemDiscussionComponent implements OnInit {
 	usernameToAvatarMap = {};
 
 	constructor(
+		private router: Router,
 		private problemService: ProblemService,
 		public userService: UserService
 	) {
@@ -67,6 +72,11 @@ export class ProblemDiscussionComponent implements OnInit {
 			},
 			err => console.error(err)
 		);
+	}
+
+	saveRoute() {
+		localStorage.setItem('loginCallbackUrl', this.router.url);
+		localStorage.setItem('loggedIn', 'false');
 	}
 
 	submitComment(form: NgForm) {

@@ -83,4 +83,18 @@
 			</form>
 		</mat-card-content>
 	</mat-card>
+
+</div>
+<div *ngIf="!userService.isLoggedIn">
+	<mat-card class="mb-3">
+		<mat-card-content>
+			<p *ngIf="comments && comments.length != 0">
+				<a (click)="saveRoute()" [href]="'https://github.com/login/oauth/authorize?client_id=' + client_id">Login
+				with GitHub</a> to join the conversation!</p>
+			<p *ngIf="comments && comments.length == 0">
+				<a (click)="saveRoute()" [href]="'https://github.com/login/oauth/authorize?client_id=' + client_id">Login
+				with GitHub</a> to start the conversation!</p>
+		</mat-card-content>
+	</mat-card>
+
 </div>

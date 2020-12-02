@@ -27,12 +27,11 @@ export class SelectionSortComponent implements OnInit {
 		}
 		return arr;
 	}`
-	selectionSortPsuedocode = `	Step 1 − Set min to location 0
+	selectionSortExplanation = `	Step 1 − Set min to location 0
 	Step 2 − Search the minimum element in the array
 	Step 3 − Swap with value at location of min
 	Step 4 − Increment min to point to next element
 	Step 5 − Repeat until list is sorted	`
-
 
 	constructor() {
 

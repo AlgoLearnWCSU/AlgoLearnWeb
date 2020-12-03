@@ -37,9 +37,28 @@
 	{{solution.passedTests}}/{{testCases.length}} passed</p>
 <mat-card class="mb-3 p-3 rounded" *ngFor="let testCase of testCases; index as idx">
 	<mat-card-header class="ml-0">
-		<mat-card-title>Test Case {{idx}}<span style="color: red;" class="ml-3"
-				*ngIf="results != null && results.length > 0 && !isTestCasePassed(results[idx].stdout, testCase.sampleOutput)"><i
-					class="fas fa-times"></i></span>
+		<mat-card-title>
+			<div class="row">
+				<p>Test Case {{idx}}</p>
+				<ng-template
+					[ngIf]="results != null && results.length > 0 && !isTestCasePassed(results[idx].stdout, testCase.sampleOutput)">
+					<span style="color: red;" class="ml-3 mr-3">
+						<i class="fas fa-times"></i>
+					</span>
+					<p *ngIf="results[idx].status != null && results[idx].status.id != 3">
+						{{results[idx].status.description}}
+					</p>
+				</ng-template>
+				<ng-template
+					[ngIf]="results != null && results.length > 0 && isTestCasePassed(results[idx].stdout, testCase.sampleOutput)">
+					<span style="color: green;" class="ml-3 mr-3">
+						<i class="fas fa-check"></i>
+					</span>
+					<p *ngIf="results[idx].status != null && results[idx].status.id != 3">
+						{{results[idx].status.description}}
+					</p>
+				</ng-template>
+			</div>
 		</mat-card-title>
 	</mat-card-header>
 	<mat-card-content>
@@ -67,6 +86,12 @@
 			appearance="outline" color="primary">
 			<mat-label>Error Log</mat-label>
 			<textarea rows="5" matInput disabled [value]="results[idx].stderr" name="comment"></textarea>
+		</mat-form-field>
+
+		<mat-form-field *ngIf="results != null && results[idx] != null && results[idx].compile_output != null"
+			class="w-100" appearance="outline" color="primary">
+			<mat-label>Compiler Output</mat-label>
+			<textarea rows="5" matInput disabled [value]="results[idx].compile_output" name="comment"></textarea>
 		</mat-form-field>
 
 		<p *ngIf="results != null && results[idx] != null && results[idx].time != null">Time: {{results[idx].time}}</p>

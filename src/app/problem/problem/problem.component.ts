@@ -153,10 +153,23 @@ export class ProblemComponent implements OnInit {
 			while (true) {
 				const res = await this.solutionService.getResultsBySolutionId(this.solution.id).toPromise();
 				this.results = res.submissions;
-				if (this.results.every(submission => submission.status.id !== 2)) {
+				if (this.results.every(submission => submission.status.id !== 2 && submission.status.id !== 1)) {
+					for (let i = 0; i < this.results.length; ++i) {
+						if (this.results[i].compile_output != null) {
+							this.results[i].compile_output = this.results[i].compile_output.replace('\n', '');
+							this.results[i].compile_output = window.atob(this.results[i].compile_output);
+						}
+						if (this.results[i].stdout != null) {
+							this.results[i].stdout = window.atob(this.results[i].stdout);
+						}
+						if (this.results[i].stderr != null) {
+							this.results[i].stderr = window.atob(this.results[i].stderr);
+						}
+					}
 					const sol = await this.solutionService.getSolutionById(this.solution.id).toPromise()
 					this.solution = sol
 					this.loadingResults = false;
+					console.log(this.results);
 					return;
 				}
 				await this.wait();

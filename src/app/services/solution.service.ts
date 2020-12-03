@@ -19,6 +19,7 @@ export interface Result {
 	memory?: number;
 	stderr?: string;
 	token?: string;
+	compile_output: string;
 	status?: {
 		id?: number;
 		description?: string;

@@ -1,5 +1,6 @@
 <mat-paginator *ngIf="solutions != null" class="mb-3 mb-2 rounded" [length]="solutions.length"
-	[pageIndex]="pageState.pageIndex" [pageSize]="pageState.pageSize" [pageSizeOptions]="[5, 10, 25, 100]" (page)="updateSolutiontView($event)">
+	[pageIndex]="pageState.pageIndex" [pageSize]="pageState.pageSize" [pageSizeOptions]="[5, 10, 25, 100]"
+	(page)="updateSolutiontView($event)">
 </mat-paginator>
 <div *ngIf="solutions">
 	<div *ngFor="let solution of solutions |
@@ -18,8 +19,10 @@
 				<p class="my-0">Computation time: {{solution.avgCompTime}} </p>
 			</mat-card-content>
 			<mat-card-footer class="mx-0">
-				<p>Code: </p>
-				<p class="code">{{solution.code}}</p>
+				<mat-form-field class="w-100" appearance="outline" color="primary">
+					<mat-label>Code Preview</mat-label>
+					<textarea rows="5" matInput disabled [value]="solution.code" name="comment"></textarea>
+				</mat-form-field>
 			</mat-card-footer>
 		</mat-card>
 	</div>

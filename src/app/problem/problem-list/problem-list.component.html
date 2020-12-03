@@ -84,8 +84,8 @@
 		</mat-paginator>
 		<mat-list>
 			<mat-list-item *ngFor="let problem of notReviewedProblems | 
-			slice:reviewedPageState.pageIndex * reviewedPageState.pageSize:
-			reviewedPageState.pageIndex * reviewedPageState.pageSize+reviewedPageState.pageSize; index as idx" class="d-block"
+			slice:notReviewedPageState.pageIndex * notReviewedPageState.pageSize:
+			notReviewedPageState.pageIndex * notReviewedPageState.pageSize+notReviewedPageState.pageSize; index as idx" class="d-block"
 				style="width: fit-content">
 				<a routerLink="/problem/solve/{{problem.problem.id}}">{{problem.problem.name}}</a>
 				{{": " + problem.problem.description | slice:0:50-problem.problem.name.length}}

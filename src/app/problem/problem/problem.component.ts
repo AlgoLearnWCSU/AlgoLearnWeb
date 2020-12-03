@@ -157,7 +157,14 @@ export class ProblemComponent implements OnInit {
 					for (let i = 0; i < this.results.length; ++i) {
 						if (this.results[i].compile_output != null) {
 							this.results[i].compile_output = this.results[i].compile_output.replace('\n', '');
-							this.results[i].compile_output = window.atob(this.results[i].compile_output);
+							this.results[i].compile_output = atob(this.results[i].compile_output);
+							let temp = '';
+							for (let j = 0; j < this.results[i].compile_output.length; ++j) {
+								if (this.results[i].compile_output[j] >= '\0' && this.results[i].compile_output[j] <= '~') {
+									temp += this.results[i].compile_output[j];
+								}
+							}
+							this.results[i].compile_output = temp;
 						}
 						if (this.results[i].stdout != null) {
 							this.results[i].stdout = window.atob(this.results[i].stdout);

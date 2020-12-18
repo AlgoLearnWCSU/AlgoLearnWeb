@@ -25,8 +25,8 @@ export class ProblemComponent implements OnInit {
 	results: Result[];
 	loadingSubmit = false;
 	loadingResults = false;
-	lang;
-	solution;
+	lang: Language;
+	solution: Solution;
 
 	constructor(
 		private problemService: ProblemService,
@@ -101,7 +101,6 @@ export class ProblemComponent implements OnInit {
 	}
 
 	async runCode() {
-		this.loadingSubmit = true;
 		this.solution = {
 			id: null,
 			solver: this.userService.username,
@@ -109,6 +108,15 @@ export class ProblemComponent implements OnInit {
 			code: this.codeEditor.getCode(),
 			languageId: this.lang.id
 		};
+		if (this.solution.code.length === 0) {
+			this.notifierService.addNotification({
+				warning: true,
+				title: 'Error Submitting Solution',
+				message: 'Cannot submit a blank code block'
+			});
+			return;
+		}
+		this.loadingSubmit = true;
 		const previousSolutions =
 			await this.solutionService.getSolutionsByProblemIdAndUserAndLang(
 				this.id, this.userService.username, this.lang.id).toPromise();
@@ -134,7 +142,7 @@ export class ProblemComponent implements OnInit {
 			this.loadingSubmit = false;
 			this.notifierService.addNotification({
 				warning: true,
-				title: 'Error Creating Problem',
+				title: 'Error Submitting Solution',
 				message: err && err.message ? err.message : err.toString()
 			});
 			this.loggerService.logError('Error:\n```' + (err && err.message ? err.message : err.toString())
@@ -143,7 +151,7 @@ export class ProblemComponent implements OnInit {
 	}
 
 	wait() {
-		return new Promise((resolve, reject) => {
+		return new Promise<void>((resolve, reject) => {
 			setTimeout(() => resolve(), 2000);
 		});
 	}
@@ -168,6 +176,9 @@ export class ProblemComponent implements OnInit {
 						}
 						if (this.results[i].stdout != null) {
 							this.results[i].stdout = window.atob(this.results[i].stdout);
+						}
+						else {
+							this.results[i].stdout = '';
 						}
 						if (this.results[i].stderr != null) {
 							this.results[i].stderr = window.atob(this.results[i].stderr);
